@@ -10,6 +10,7 @@
 -- GitHub: https://github.com/jdhao
 -- StackOverflow: https://stackoverflow.com/users/6064933/jdhao
 vim.loader.enable()
+vim.o.shada = "!,'1000,<50,s10,h"
 
 local version = vim.version
 
@@ -31,6 +32,7 @@ local core_conf_files = {
   "mappings.lua", -- all the user-defined mappings
   "plugins.vim", -- all the plugins installed and their configurations
   "colorschemes.lua", -- colorscheme settings
+ 
 }
 vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
 vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
