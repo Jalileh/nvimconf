@@ -14,9 +14,7 @@
 "
 "   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 "   Plug 'junegunn/vim-easy-align'
-    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-
-"   
+"
 "   " Any valid git URL is allowed
 "   Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 "
