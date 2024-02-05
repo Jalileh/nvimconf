@@ -31,8 +31,8 @@ local core_conf_files = {
   "autocommands.vim", -- various autocommands
   "mappings.lua", -- all the user-defined mappings
   "plugins.vim", -- all the plugins installed and their configurations
-  "colorschemes.lua", -- colorscheme settings
- 
+  --"colorschemes.lua", -- colorscheme settings
+  "plugins.lua"
 }
 vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
 vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
@@ -50,11 +50,13 @@ for _, file_name in ipairs(core_conf_files) do
   end
 end
  
-
+ 
+ 
  -- Define a custom highlight group for LSP suggestion snippets
-
-vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
-vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
-vim.cmd('highlight Pmenu guibg=black')
+ 
+ 
+-- vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
+-- vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
+-- vim.cmd('highlight Pmenu guibg=black')
 vim.o.undolevels = 1000
  

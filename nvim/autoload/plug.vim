@@ -14,7 +14,11 @@
 "
 "   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 "   Plug 'junegunn/vim-easy-align'
-"
+ 
+	Plug 'maxmx03/solarized.nvim'
+    Plug 'Tsuzat/NeoSolarized.nvim', { 'branch': 'master' }
+	
+"   
 "   " Any valid git URL is allowed
 "   Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 "

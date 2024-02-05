@@ -46,7 +46,7 @@ local plugin_specs = {
       require("config.lsp")
     end,
   },
-
+ 
   {
     "nvim-treesitter/nvim-treesitter",
     enabled = function()
@@ -85,6 +85,16 @@ local plugin_specs = {
     end,
     ft = { "lisp" },
   },
+
+  {
+    "Tsuzat/NeoSolarized.nvim",
+      
+      event = "VeryLazy",
+      priority = 1000, -- make sure to load this before all the other start plugins
+      config = function()
+        vim.cmd [[ colorscheme NeoSolarized ]]
+      end	
+  },	
 
   -- Super fast buffer jump
   {
@@ -125,18 +135,18 @@ local plugin_specs = {
   },
 
   -- A list of colorscheme plugin you may want to try. Find what suits you.
-  { "navarasu/onedark.nvim", lazy = true },
-  { "sainnhe/edge", lazy = true },
-  { "sainnhe/sonokai", lazy = true },
-  { "sainnhe/gruvbox-material", lazy = true },
-  { "shaunsingh/nord.nvim", lazy = true },
-  { "sainnhe/everforest", lazy = true },
-  { "EdenEast/nightfox.nvim", lazy = true },
-  { "rebelot/kanagawa.nvim", lazy = true },
-  { "catppuccin/nvim", name = "catppuccin", lazy = true },
-  { "olimorris/onedarkpro.nvim", lazy = true },
-  { "tanvirtin/monokai.nvim", lazy = true },
-  { "marko-cerovac/material.nvim", lazy = true },
+  { "navarasu/onedark.nvim", lazy = "VeryLazy" },
+  { "sainnhe/edge", lazy = "VeryLazy" },
+  { "sainnhe/sonokai", lazy = "VeryLazy" },
+  { "sainnhe/gruvbox-material", lazy = "VeryLazy" },
+  { "shaunsingh/nord.nvim", lazy = "VeryLazy" },
+  { "sainnhe/everforest", lazy = "VeryLazy" },
+  { "EdenEast/nightfox.nvim", lazy = "VeryLazy" },
+  { "rebelot/kanagawa.nvim", lazy = "VeryLazy" },
+  { "catppuccin/nvim", name = "catppuccin", lazy = "VeryLazy" },
+  { "olimorris/onedarkpro.nvim", lazy = "VeryLazy" },
+  { "tanvirtin/monokai.nvim", lazy = "VeryLazy" },
+  { "marko-cerovac/material.nvim", lazy = "VeryLazy" },
 
   { "nvim-tree/nvim-web-devicons", event = "VeryLazy" },
 
@@ -312,7 +322,7 @@ local plugin_specs = {
   },
 
   -- Better git commit experience
-  { "rhysd/committia.vim", lazy = true },
+  { "rhysd/committia.vim", lazy = "VeryLazy" },
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
@@ -405,7 +415,7 @@ local plugin_specs = {
   { "tpope/vim-scriptease", cmd = { "Scriptnames", "Message", "Verbose" } },
 
   -- Asynchronous command execution
-  { "skywind3000/asyncrun.vim", lazy = true, cmd = { "AsyncRun" } },
+  { "skywind3000/asyncrun.vim", lazy = "VeryLazy", cmd = { "AsyncRun" } },
   { "cespare/vim-toml", ft = { "toml" }, branch = "main" },
 
   -- Edit text area in browser using nvim
@@ -420,7 +430,7 @@ local plugin_specs = {
     build = function()
       vim.fn["firenvim#install"](0)
     end,
-    lazy = true,
+    lazy = "VeryLazy",
   },
 
   -- Debugger plugin
@@ -433,7 +443,7 @@ local plugin_specs = {
       return false
     end,
     build = { "bash install.sh" },
-    lazy = true,
+    lazy = "VeryLazy",
   },
 
   -- Session management plugin
