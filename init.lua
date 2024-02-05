@@ -52,9 +52,9 @@ end
  
 
  -- Define a custom highlight group for LSP suggestion snippets
-
-vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
-vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
-vim.cmd('highlight Pmenu guibg=black')
+vim.cmd.colorscheme "catppuccin"
+-- vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
+-- vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
+-- vim.cmd('highlight Pmenu guibg=black')
 vim.o.undolevels = 1000
  
