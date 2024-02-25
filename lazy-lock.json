@@ -14,6 +14,7 @@
   "committia.vim": { "branch": "master", "commit": "a187b8633694027ab5ef8a834527d33093282f95" },
   "dashboard-nvim": { "branch": "master", "commit": "c045eb24334324fb39ad5ede0b5d15a74a5d229e" },
   "delimitMate": { "branch": "master", "commit": "537a1da0fa5eeb88640425c37e545af933c56e1b" },
+  "dooku.nvim": { "branch": "main", "commit": "632ac0e27a96e77d8be47c42583fb58c3be9d85f" },
   "dressing.nvim": { "branch": "master", "commit": "6f212262061a2120e42da0d1e87326e8a41c0478" },
   "edge": { "branch": "master", "commit": "7506891a93dd0954d59b556ae5bb4c85403150ed" },
   "emmylua-nvim": { "branch": "master", "commit": "6526f8b9bc7b5d26c1192f22ca47f4a7e6b91e7f" },

@@ -1,5 +1,15 @@
 local utils = require("utils")
 
+
+
+-- This file can be loaded by calling `lua require('plugins')` from your init.vim
+
+-- Only required if you have packer configured as `opt`
+ 
+
+
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazypath) then
@@ -61,7 +71,7 @@ local plugin_specs = {
       require("config.treesitter")
     end,
   },
-
+  
   -- Python indent (follows the PEP8 style)
   { "Vimjas/vim-python-pep8-indent", ft = { "python" } },
 
@@ -86,15 +96,37 @@ local plugin_specs = {
     ft = { "lisp" },
   },
 
-  {
-    "Tsuzat/NeoSolarized.nvim",
-      
-      event = "VeryLazy",
-      priority = 1000, -- make sure to load this before all the other start plugins
-      config = function()
-        vim.cmd [[ colorscheme NeoSolarized ]]
-      end	
-  },	
+	
+{
+  "Tsuzat/NeoSolarized.nvim",
+  
+  event = "VeryLazy",
+  priority = 1000, -- Make sure to load this before all other start plugins
+  config = function()
+    local NeoSolarized = require('NeoSolarized')
+    
+    NeoSolarized.setup {
+      style = "dark", -- "dark" or "light"
+      transparent = false, -- Ensure background color is not transparent
+      terminal_colors = true,
+      enable_italics = true,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = { bold = true },
+        variables = {},
+        string = { italic = true },
+        underline = true,
+        undercurl = true,
+      },
+      on_highlights = function(highlights, colors) 
+        -- You can customize specific highlight groups here
+      end
+    }
+
+    vim.cmd [[ colorscheme NeoSolarized ]]
+  end	
+},
 
   -- Super fast buffer jump
   {
@@ -511,3 +543,5 @@ local lazy_opts = {
 }
 
 require("lazy").setup(plugin_specs, lazy_opts)
+
+ 

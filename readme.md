@@ -1,1 +1,1 @@
-ready configured move nvim to appdata.
+My Custom Neovim TextEditor

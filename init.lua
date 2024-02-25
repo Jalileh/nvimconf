@@ -14,6 +14,11 @@ vim.o.shada = "!,'1000,<50,s10,h"
 
 local version = vim.version
 
+
+
+ 
+
+
 -- check if we have the latest stable version of nvim
 local expected_ver = "0.9.2"
 local ev = version.parse(expected_ver)
@@ -24,6 +29,8 @@ if version.cmp(ev, actual_ver) ~= 0 then
   local msg = string.format("Expect nvim %s, but got %s instead. Use at your own risk!", expected_ver, _ver)
   vim.api.nvim_err_writeln(msg)
 end
+ 
+
 
 local core_conf_files = {
   "globals.lua", -- some global settings
@@ -36,6 +43,9 @@ local core_conf_files = {
 }
 vim.cmd('highlight LspDiagnosticsDefaultInformation guibg=black')
 vim.cmd('highlight LspDiagnosticsDefaultHint guibg=black')
+
+
+
 
 -- source all the core config files
 for _, file_name in ipairs(core_conf_files) do
