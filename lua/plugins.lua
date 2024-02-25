@@ -141,7 +141,7 @@ local plugin_specs = {
     event = "VeryLazy",
     config = function()
  
-      require('navigator').setup()
+    
     end,
   },
   
