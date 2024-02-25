@@ -1,6 +1,75 @@
+ 
+
+
 local utils = require("utils")
 
+ 
 
+
+
+-- Define packages
+
+local present, _ = pcall(require, "packerInit")
+local packer = require 'packer'
+
+ 
+    packer = require "packer"
+ 
+
+local use = packer.use
+
+ packer.startup(function()
+    use {
+        'hoob3rt/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        branch = '0.5-compat'
+    }
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    }
+    
+    use 'wbthomason/packer.nvim'
+    use 'neovim/nvim-lspconfig'
+    use 'hrsh7th/nvim-compe'
+    use 'Mofiqul/dracula.nvim'
+    use "Pocco81/TrueZen.nvim"
+    use 'windwp/nvim-autopairs'
+    use 'b3nj5m1n/kommentary'
+    use 'akinsho/nvim-toggleterm.lua'
+    use 'whiteinge/diffconflicts'
+    
+      
+  use {
+    'kkoomen/vim-doge',
+    run = ':call doge#install()'
+    
+  }
+  
+  
+  
+  use({
+    'ray-x/navigator.lua',
+    requires = {
+        { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+        { 'neovim/nvim-lspconfig' },
+    },
+    config = function()
+        require'navigator'.setup()
+    end
+  })
+
+  
+    
+    
+    
+ 
+end
+)
 
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
@@ -57,18 +126,32 @@ local plugin_specs = {
     end,
   },
  
+  
+  
+  {
+    "ray-x/guihua.lua",
+    event = "VeryLazy",
+    config = function()
+    
+    end,
+  },
+ 
+  {
+    "ray-x/navigator.lua",
+    event = "VeryLazy",
+    config = function()
+ 
+      require('navigator').setup()
+    end,
+  },
+  
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = function()
-      if vim.g.is_mac then
-        return true
-      end
-      return false
-    end,
     event = "VeryLazy",
+  
     build = ":TSUpdate",
     config = function()
-      require("config.treesitter")
+      require("config/treesitter")
     end,
   },
   

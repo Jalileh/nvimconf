@@ -15,16 +15,23 @@
 "   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 "   Plug 'junegunn/vim-easy-align'
  
-
  
-	Plug 'maxmx03/solarized.nvim'
-    Plug 'Tsuzat/NeoSolarized.nvim', { 'branch': 'master' }
+ 
+ 
+Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+Plug 'ray-x/navigator.lua'
+	
+	Plug 'maxmx03/solarized.nvim' 
+  Plug 'Tsuzat/NeoSolarized.nvim', { 'branch': 'master' }
+	
 	Plug 'nvim-lua/plenary.nvim'
+	
 	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 	" or                                , { 'branch': '0.1.x' }
 
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/nvim-tree-docs'
+	Plug 'nvim-treesitter/nvim-treesitter'
+	Plug 'nvim-treesitter/nvim-tree-docs'
 
 "   
 "   " Any valid git URL is allowed

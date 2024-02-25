@@ -3,10 +3,13 @@ scriptencoding utf-8
 " Plugin specification and lua stuff
 lua require('plugins')
 
+
 " Use short names for common plugin manager commands to simplify typing.
 " To use these shortcuts: first activate command line with `:`, then input the
 " short alias, e.g., `pi`, then press <space>, the alias will be expanded to
 " the full command automatically.
+
+
 call utils#Cabbrev('pi', 'Lazy install')
 call utils#Cabbrev('pud', 'Lazy update')
 call utils#Cabbrev('pc', 'Lazy clean')
