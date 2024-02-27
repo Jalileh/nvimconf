@@ -1,9 +1,9 @@
- 
+
 
 
 local utils = require("utils")
 
- 
+
 
 
 
@@ -12,9 +12,9 @@ local utils = require("utils")
 local present, _ = pcall(require, "packerInit")
 local packer = require 'packer'
 
- 
+
     packer = require "packer"
- 
+
 
 local use = packer.use
 
@@ -32,7 +32,7 @@ local use = packer.use
         'nvim-telescope/telescope.nvim',
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
-    
+
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
     use 'hrsh7th/nvim-compe'
@@ -42,39 +42,39 @@ local use = packer.use
     use 'b3nj5m1n/kommentary'
     use 'akinsho/nvim-toggleterm.lua'
     use 'whiteinge/diffconflicts'
-    
-      
+
+
   use {
     'kkoomen/vim-doge',
     run = ':call doge#install()'
-    
-  }
-  
-  
-  
-  use({
-    'ray-x/navigator.lua',
-    requires = {
-        { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
-        { 'neovim/nvim-lspconfig' },
-    },
-    config = function()
-        require'navigator'.setup()
-    end
-  })
 
-  
-    
-    
-    
- 
+  }
+
+
+
+--   use({
+--     'ray-x/navigator.lua',
+--     requires = {
+--         { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+--         { 'neovim/nvim-lspconfig' },
+--     },
+--     config = function()
+--         require'navigator'.setup()
+--     end
+--   })
+
+
+
+
+
+
 end
 )
 
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
- 
+
 
 
 
@@ -98,63 +98,76 @@ local firenvim_not_active = function()
   return not vim.g.started_by_firenvim
 end
 
-local plugin_specs = {
-  -- auto-completion engine
-  {
-    "hrsh7th/nvim-cmp",
-    -- event = 'InsertEnter',
-    event = "VeryLazy",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "onsails/lspkind-nvim",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-omni",
-      "hrsh7th/cmp-emoji",
-      "quangnguyen30192/cmp-nvim-ultisnips",
-    },
-    config = function()
-      require("config.nvim-cmp")
-    end,
-  },
+    local plugin_specs = {
+      -- auto-completion engine
+      {
+        -- "hrsh7th/nvim-cmp",
+        -- -- event = 'InsertEnter',
+        -- event = "VeryLazy",
+        -- dependencies = {
+        --   "hrsh7th/cmp-nvim-lsp",
+        --   "onsails/lspkind-nvim",
+        --   "hrsh7th/cmp-path",
+        --   "hrsh7th/cmp-buffer",
+        --   "hrsh7th/cmp-omni",
+        --   "hrsh7th/cmp-emoji",
+        --   "quangnguyen30192/cmp-nvim-ultisnips",
+        -- },
+        -- config = function()
+        --   require("config.nvim-cmp")
+        -- end,
+      },
 
-  {
-    "neovim/nvim-lspconfig",
-    event = { "BufRead", "BufNewFile" },
-    config = function()
-      require("config.lsp")
-    end,
-  },
- 
-  
-  
+--   {
+--     "neovim/nvim-lspconfig",
+--     event = { "BufRead", "BufNewFile" },
+--     config = function()
+--       require("config.lsp")
+--     end,
+--   },
+
+      {
+          "williamboman/mason.nvim",
+          config = function()
+              require("mason").setup()
+          end,
+      },
+
+      {
+
+      },
+
+      {
+
+      },
+
   {
     "ray-x/guihua.lua",
     event = "VeryLazy",
     config = function()
-    
+
     end,
   },
- 
-  {
-    "ray-x/navigator.lua",
-    event = "VeryLazy",
-    config = function()
- 
-    
-    end,
-  },
-  
+
+  -- {
+  --   "ray-x/navigator.lua",
+  --   event = "VeryLazy",
+  --   config = function()
+
+
+  --   end,
+  -- },
+
   {
     "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
-  
+
     build = ":TSUpdate",
     config = function()
       require("config/treesitter")
     end,
   },
-  
+
   -- Python indent (follows the PEP8 style)
   { "Vimjas/vim-python-pep8-indent", ft = { "python" } },
 
@@ -179,15 +192,15 @@ local plugin_specs = {
     ft = { "lisp" },
   },
 
-	
+
 {
   "Tsuzat/NeoSolarized.nvim",
-  
+
   event = "VeryLazy",
   priority = 1000, -- Make sure to load this before all other start plugins
   config = function()
     local NeoSolarized = require('NeoSolarized')
-    
+
     NeoSolarized.setup {
       style = "dark", -- "dark" or "light"
       transparent = false, -- Ensure background color is not transparent
@@ -202,13 +215,13 @@ local plugin_specs = {
         underline = true,
         undercurl = true,
       },
-      on_highlights = function(highlights, colors) 
+      on_highlights = function(highlights, colors)
         -- You can customize specific highlight groups here
       end
     }
 
     vim.cmd [[ colorscheme NeoSolarized ]]
-  end	
+  end
 },
 
   -- Super fast buffer jump
@@ -627,4 +640,4 @@ local lazy_opts = {
 
 require("lazy").setup(plugin_specs, lazy_opts)
 
- 
+
