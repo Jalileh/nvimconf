@@ -162,13 +162,7 @@ end
       -- },
 
 
-      -- {
-      --     " ",
-      --     config = function()
-      --      
-      --     end,
-  
-      -- },
+ 
 
 
       -- {
@@ -261,7 +255,7 @@ end
       end
     }
 
-    -- vim.cmd [[ colorscheme NeoSolarized ]]
+    vim.cmd [[ colorscheme focuspoint ]]
   end
 },
 
