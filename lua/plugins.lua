@@ -28,7 +28,7 @@ local use = packer.use
         run = ':TSUpdate',
         branch = '0.5-compat'
     }
-  
+
 
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
@@ -46,7 +46,7 @@ local use = packer.use
     run = ':call doge#install()'
 
   }
-    
+
 
 
 --   use({
@@ -136,45 +136,53 @@ end
       {
           "rafi/awesome-vim-colorschemes",
           config = function()
-           
+
           end,
-  
+
       },
 
-    
+
 
       {
-          event = "VeryLazy", 
+          event = "VeryLazy",
           "mnishz/colorscheme-preview.vim",
           config = function()
-           
+
           end,
-  
+
       },
 
 
+      {
+          "sbdchd/neoformat",
+          event = VeryLazy,
+          config = function()
+
+            require('neoformat').setup {
+              cpp = {
+                exe = 'clangd',
+                args = {'--style=file'},
+                replace = true
+              }
+            }
+          end,
+
+      },
+
+
+
+
+
       -- {
       --     " ",
       --     config = function()
-      --      
+      --
       --     end,
-  
+
       -- },
 
 
- 
 
-
-      -- {
-      --     " ",
-      --     config = function()
-      --      
-      --     end,
-  
-      -- },
-
-                    
-     
   {
     "ray-x/guihua.lua",
     event = "VeryLazy",
@@ -182,8 +190,8 @@ end
 
     end,
   },
-  
-   
+
+
   -- {
   --   "ray-x/navigator.lua",
   --   event = "VeryLazy",
@@ -199,7 +207,12 @@ end
 
     build = ":TSUpdate",
     config = function()
-      require("config/treesitter")
+      require'nvim-treesitter.configs'.setup {
+        indent = {
+          enable = true
+        }
+      }
+          vim.cmd[[setlocal shiftwidth=2]]
     end,
   },
 
@@ -288,8 +301,8 @@ end
       end
     end,
   },
-  
-  
+
+
   {
     "nvim-telescope/telescope.nvim",
     opts = {
@@ -298,8 +311,8 @@ end
     },
     dependencies = { "nvim-lua/plenary.nvim" },
   },
-  
-  
+
+
 
   -- A list of colorscheme plugin you may want to try. Find what suits you.
   { "navarasu/onedark.nvim", lazy = "VeryLazy" },
