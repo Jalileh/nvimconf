@@ -261,7 +261,7 @@ end
       end
     }
 
-    vim.cmd [[ colorscheme NeoSolarized ]]
+    -- vim.cmd [[ colorscheme NeoSolarized ]]
   end
 },
 
@@ -299,7 +299,7 @@ end
   {
     "nvim-telescope/telescope.nvim",
     opts = {
-      defaults = { layout_config = { horizontal = { preview_cutoff =  1 } } },
+      defaults = { layout_config = { horizontal = { preview_cutoff =  0 } } },
       pickers = { colorscheme = { enable_preview = true } },
     },
     dependencies = { "nvim-lua/plenary.nvim" },
