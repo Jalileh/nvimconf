@@ -12,6 +12,7 @@ local opts = { noremap = true, silent = true }
 api.nvim_set_keymap('n', '<leader>tf', '<cmd>Telescope find_files<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>tg', '<cmd>Telescope live_grep<CR>', { noremap = true })
 
+api.nvim_set_keymap('n', '<leader>tb', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { noremap = true })
 
 api.nvim_set_keymap('n', '<leader>tu', '<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>' , { noremap = true })
 
