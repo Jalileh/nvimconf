@@ -28,10 +28,7 @@ local use = packer.use
         run = ':TSUpdate',
         branch = '0.5-compat'
     }
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-    }
+  
 
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
@@ -49,7 +46,7 @@ local use = packer.use
     run = ':call doge#install()'
 
   }
-
+    
 
 
 --   use({
@@ -101,30 +98,30 @@ end
     local plugin_specs = {
       -- auto-completion engine
       {
-        -- "hrsh7th/nvim-cmp",
-        -- -- event = 'InsertEnter',
-        -- event = "VeryLazy",
-        -- dependencies = {
-        --   "hrsh7th/cmp-nvim-lsp",
-        --   "onsails/lspkind-nvim",
-        --   "hrsh7th/cmp-path",
-        --   "hrsh7th/cmp-buffer",
-        --   "hrsh7th/cmp-omni",
-        --   "hrsh7th/cmp-emoji",
-        --   "quangnguyen30192/cmp-nvim-ultisnips",
-        -- },
-        -- config = function()
-        --   require("config.nvim-cmp")
-        -- end,
+        "hrsh7th/nvim-cmp",
+        -- event = 'InsertEnter',
+        event = "VeryLazy",
+        dependencies = {
+          "hrsh7th/cmp-nvim-lsp",
+          "onsails/lspkind-nvim",
+          "hrsh7th/cmp-path",
+          "hrsh7th/cmp-buffer",
+          "hrsh7th/cmp-omni",
+          "hrsh7th/cmp-emoji",
+          "quangnguyen30192/cmp-nvim-ultisnips",
+        },
+        config = function()
+          require("config.nvim-cmp")
+        end,
       },
 
---   {
---     "neovim/nvim-lspconfig",
---     event = { "BufRead", "BufNewFile" },
---     config = function()
---       require("config.lsp")
---     end,
---   },
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufRead", "BufNewFile" },
+    config = function()
+      require("config.lsp")
+    end,
+  },
 
       {
           "williamboman/mason.nvim",
@@ -133,14 +130,57 @@ end
           end,
       },
 
-      {
 
+
+
+      {
+          "rafi/awesome-vim-colorschemes",
+          config = function()
+           
+          end,
+  
       },
 
-      {
+    
 
+      {
+          event = "VeryLazy", 
+          "mnishz/colorscheme-preview.vim",
+          config = function()
+           
+          end,
+  
       },
 
+
+      -- {
+      --     " ",
+      --     config = function()
+      --      
+      --     end,
+  
+      -- },
+
+
+      -- {
+      --     " ",
+      --     config = function()
+      --      
+      --     end,
+  
+      -- },
+
+
+      -- {
+      --     " ",
+      --     config = function()
+      --      
+      --     end,
+  
+      -- },
+
+                    
+     
   {
     "ray-x/guihua.lua",
     event = "VeryLazy",
@@ -148,7 +188,8 @@ end
 
     end,
   },
-
+  
+   
   -- {
   --   "ray-x/navigator.lua",
   --   event = "VeryLazy",
@@ -253,14 +294,18 @@ end
       end
     end,
   },
-  "nvim-lua/plenary.nvim",
+  
+  
   {
     "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
-    dependencies = {
-      "nvim-telescope/telescope-symbols.nvim",
+    opts = {
+      defaults = { layout_config = { horizontal = { preview_cutoff =  1 } } },
+      pickers = { colorscheme = { enable_preview = true } },
     },
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
+  
+  
 
   -- A list of colorscheme plugin you may want to try. Find what suits you.
   { "navarasu/onedark.nvim", lazy = "VeryLazy" },
