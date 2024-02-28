@@ -212,7 +212,7 @@ end
           enable = true
         }
       }
-          vim.cmd[[setlocal shiftwidth=2]]
+       
     end,
   },
 
