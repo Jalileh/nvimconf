@@ -14,5 +14,8 @@ api.nvim_set_keymap('n', '<leader>tg', '<cmd>Telescope live_grep<CR>', { noremap
 
 api.nvim_set_keymap('n', '<leader>tb', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { noremap = true })
 
+api.nvim_set_keymap('n', '<leader>tt', '<cmd>TroubleToggle<CR>', { noremap = true })
+
+
 api.nvim_set_keymap('n', '<leader>tu', '<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>' , { noremap = true })
 
