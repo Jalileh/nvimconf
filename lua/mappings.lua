@@ -19,3 +19,23 @@ api.nvim_set_keymap('n', '<leader>tt', '<cmd>TroubleToggle<CR>', { noremap = tru
 
 api.nvim_set_keymap('n', '<leader>tu', '<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>' , { noremap = true })
 
+
+api.nvim_set_keymap('n', '<leader>wtd', '<cmd>vsplit term://%:p:h//bash<CR>' , { noremap = true })
+
+
+api.nvim_set_keymap('t', '<C-t>', '<C-\\><C-n>', {noremap = true})
+
+-- Function to open a Bash terminal split to the right using the directory where Neovim was started
+function open_bash_terminal_start_dir()
+  -- Get the directory where Neovim was started
+  local start_dir = vim.fn.getcwd()
+
+  -- Normalize the directory path for the current operating system
+  start_dir = start_dir:gsub("/", "\\")
+
+  -- Open a new vertical split and open a terminal in the specified directory
+  vim.cmd('vsplit | terminal bash -c "cd \'' .. start_dir .. '\' && exec $SHELL"')
+end
+
+-- Map a key to open the Bash terminal split to the right using the directory where Neovim was started
+api.nvim_set_keymap('n', '<leader>wtw', ':lua open_bash_terminal_start_dir()<CR>', {noremap = true, silent = true})
