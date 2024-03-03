@@ -53,7 +53,8 @@ function generate_organizing_text()
     "////",
     "////",
     string.rep("/", 70),
-    string.rep("/", 70)
+    string.rep("/", 70),
+    " "
   }
 
   -- Get the current line number
