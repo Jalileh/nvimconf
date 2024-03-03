@@ -48,9 +48,11 @@ function generate_organizing_text()
   -- Define the organizing text with the provided section name
   local organizing_text = {
     " ",
-    "////",
-    "////   " .. section_name,
-    "////",
+    "////       ",
+    "////       ",
+    "////       ",
+    "////       ",
+    "////  " .. section_name,
     "////",
     string.rep("/", 70),
     string.rep("/", 70),
