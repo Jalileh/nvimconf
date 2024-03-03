@@ -50,8 +50,6 @@ function generate_organizing_text()
   -- Define the organizing text with the provided section name
   local organizing_text = {
       "                ",
-      "                ",
-      "                ",
       "//             @",
       "//           _____",
       "//",
@@ -72,17 +70,15 @@ function generate_organizing_text()
       "//           -  -",
       "//",
       "//            @@",
-      "                ",
-      "                ",
       "                "
   }
-
+  
   -- Calculate the maximum length of the section name
   local max_length = 0
 
   -- Find the maximum length of the section name
   for _, line in ipairs(organizing_text) do
-      local name_length = line:sub(8):find("%S")
+      local name_length = line:sub(6):find("%S")
       if name_length then
           max_length = math.max(max_length, #line - name_length + 1)
       end
@@ -93,8 +89,7 @@ function generate_organizing_text()
   local name_padding = string.rep(" ", padding)
 
   -- Adjust the lines to align the section name and @@
-  organizing_text[5] = string.format("//        %s%s", name_padding, section_name)
-  -- organizing_text[7] = string.format("//             %s..", string.rep(" ", padding - 3))
+  organizing_text[12] = string.format("//     %s%s", name_padding, section_name)
 
   -- Get the current line number
   local current_line = vim.fn.line('.')
@@ -106,6 +101,7 @@ function generate_organizing_text()
 
   -- Move cursor to the line below the last line of the inserted text
   vim.cmd(tostring(current_line + #organizing_text) .. 'j')
+
 end
 
 
