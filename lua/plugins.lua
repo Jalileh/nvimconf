@@ -23,12 +23,7 @@ local use = packer.use
         'hoob3rt/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        branch = '0.5-compat'
-    }
-
+    
 
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
@@ -201,20 +196,6 @@ end
   --   end,
   -- },
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
-
-    build = ":TSUpdate",
-    config = function()
-      require'nvim-treesitter.configs'.setup {
-        indent = {
-          enable = true
-        }
-      }
-       
-    end,
-  },
   
   {
   
