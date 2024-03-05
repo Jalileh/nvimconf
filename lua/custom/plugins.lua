@@ -46,12 +46,6 @@ local plugins = {
       require "custom.configs.conform"
     end,
   },
-  {
-    "hrsh7th/cmp-cmdline",
-    lazy = false,
-    --  for users those who want auto-save conform + lazyloading!
-    -- event = "BufWritePre"
-  },
 
   -- To make a plugin not be loaded
   -- {
