@@ -7,6 +7,5 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
-  "hide-files.files": [],
-  "C_Cpp.errorSquiggles": "enabled"
+  "hide-files.files": []
 }
