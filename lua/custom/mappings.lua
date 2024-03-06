@@ -11,39 +11,69 @@ M.general = {
         require("conform").format()
       end,
       "formatting",
-    }
-
+    },
   },
   v = {
-    [">"] = { ">gv", "indent"},
+    [">"] = { ">gv", "indent" },
   },
 }
 
- 
 -- Define your custom mappings
 M.custom_mappings = {
   n = {
-  
-    ["<leader>tg"] = {"<cmd>Telescope live_grep<CR>", "Telescope live_grep"},
-    ["<leader>tb"] = {"<cmd>Telescope current_buffer_fuzzy_find<CR>", "Telescope current_buffer_fuzzy_find"},
-    -- ["<leader>tu"] = {"<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>", "Toggle undotree and focus"},
-    ["<leader>wtd"] = {"<cmd>vsplit term://%:p:h//bash<CR>", "Open bash terminal split"},
-    ["<leader>wtw"] = {"<cmd>lua open_bash_terminal_start_dir()<CR>", "Open Bash terminal in current directory"},
-    ["<leader>gc"] = {"<cmd>lua generate_organizing_text()<CR>", "Generate organizing text in C++ file"}
+
+    ["<leader>tg"] = { "<cmd>Telescope live_grep<CR>", "Telescope live_grep" },
+    ["<leader>tb"] = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Telescope current_buffer_fuzzy_find" },
+    ["<leader>ut"] = {"<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>", "Toggle undotree and focus"},
+    ["<leader>wtd"] = { "<cmd>vsplit term://%:p:h//bash<CR>", "Open bash terminal split" },
+    ["<leader>wtw"] = { "<cmd>lua open_bash_terminal_start_dir()<CR>", "Open Bash terminal in current directory" },
+    ["<leader>gc"] = { "<cmd>lua generate_organizing_text()<CR>", "Generate organizing section in C++ file" },
+      -- enter current directory and set its focus
+
+    ["<leader>wcd"] = { "<cmd>lua SetCDtoBufferCWD()<CR>", "Point Neovim to the buffer CWD" },
+    ["<leader>wcp"] = { "<cmd>lua SetBackPreviousCD()<CR>", "Point Neovim to Previous Cached CWD" },
   },
- 
 }
+
+PrevCWD = "unset"
+ 
+Prev_state = 0
+-- enter current directory and set its focus
+function SetCDtoBufferCWD()
+  local buffercwd = vim.fn.expand('%:p:h')
+
+  print(vim.fn.expand('%:p:h') )
+  if Prev_state == 0 then
+      PrevCWD = buffercwd
+      Prev_state = 1
+   elseif Prev_state == 2 then
+      Prev_state = 0
+   else
+     Prev_state = Prev_state + 1
+  end
+
+   vim.cmd("cd " .. buffercwd)
+end
+
+
+function SetBackPreviousCD()
+  print(PrevCWD)
+  switchback = vim.fn.getcwd()
+  vim.cmd("cd " .. PrevCWD)
+  PrevCWD = switchback
+end
 
 -- Function to open a Bash terminal split to the right using the directory where Neovim was started
 function open_bash_terminal_start_dir()
   local start_dir = vim.fn.getcwd()
   start_dir = start_dir:gsub("/", "\\")
-  vim.cmd('vsplit | terminal bash -c "cd \'' .. start_dir .. '\' && exec $SHELL"')
+  vim.cmd("vsplit | terminal bash -c \"cd '" .. start_dir .. "' && exec $SHELL\"")
 end
 
 -- Function to generate organizing text in a C++ file
 function generate_organizing_text()
-  local section_name = vim.fn.input('Enter section name: ')
+  local section_name = "@s." .. vim.fn.input "Enter section name: "
+
   local organizing_text = {
     " ",
     "////       ",
@@ -54,15 +84,15 @@ function generate_organizing_text()
     "////",
     string.rep("/", 70),
     string.rep("/", 70),
-    " "
+    " ",
   }
-  local current_line = vim.fn.line('.')
-  for _, line in ipairs(organizing_text) do
-      vim.api.nvim_buf_set_lines(0, current_line - 1, current_line - 1, true, {line})
-  end
-  vim.cmd(tostring(current_line + #organizing_text) .. 'j')
-end
 
- 
+  local current_line = vim.fn.line "."
+  for _, line in ipairs(organizing_text) do
+    vim.api.nvim_buf_set_lines(0, current_line - 1, current_line - 1, true, { line })
+  end
+
+  vim.cmd(tostring(current_line + #organizing_text) .. "j")
+end
 
 return M
