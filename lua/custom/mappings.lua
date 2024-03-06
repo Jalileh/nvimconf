@@ -41,12 +41,13 @@ Prev_state = 0
 -- enter current directory and set its focus
 function SetCDtoBufferCWD()
   local buffercwd = vim.fn.expand('%:p:h')
-
   print(vim.fn.expand('%:p:h') )
+   
+      PrevCWD = vim.fn.getcwd()
+
   if Prev_state == 0 then
-      PrevCWD = buffercwd
       Prev_state = 1
-   elseif Prev_state == 2 then
+   elseif Prev_state == 1 then
       Prev_state = 0
    else
      Prev_state = Prev_state + 1
@@ -55,10 +56,10 @@ function SetCDtoBufferCWD()
    vim.cmd("cd " .. buffercwd)
 end
 
-
+switchback = "unset"
 function SetBackPreviousCD()
-  print(PrevCWD)
-  switchback = vim.fn.getcwd()
+   print(PrevCWD)
+   switchback = vim.fn.getcwd() 
   vim.cmd("cd " .. PrevCWD)
   PrevCWD = switchback
 end
