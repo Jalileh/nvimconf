@@ -28,9 +28,11 @@ M.custom_mappings = {
     ["<leader>wtd"] = { "<cmd>vsplit term://%:p:h//bash<CR>", "Open bash terminal split" },
     ["<leader>wtw"] = { "<cmd>lua open_bash_terminal_start_dir()<CR>", "Open Bash terminal in current directory" },
     ["<leader>gc"] = { "<cmd>lua generate_organizing_text()<CR>", "Generate organizing section in C++ file" },
+    ["<leader>tt"] = { "<cmd>TroubleToggle<CR>", "toggle trouble" },
+    
     -- enter current directory and set its focus
-
     ["<leader>wcd"] = { "<cmd>lua SetCDtoBufferCWD()<CR>", "Point Neovim to the buffer CWD" },
+    -- switchback to last cwd
     ["<leader>wcp"] = { "<cmd>lua SetBackPreviousCD()<CR>", "Point Neovim to Previous Cached CWD" },
   },
 }
