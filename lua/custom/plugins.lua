@@ -53,11 +53,12 @@ local plugins = {
   
   { 
     "nvim-tree/nvim-web-devicons", 
-    event = "VeryLazy" 
+    lazy = false
   },
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" }
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false
   },
   -- To make a plugin not be loaded
   -- {
