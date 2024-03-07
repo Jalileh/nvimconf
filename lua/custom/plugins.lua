@@ -50,6 +50,15 @@ local plugins = {
     'mbbill/undotree',
     lazy = false
   },
+  
+  { 
+    "nvim-tree/nvim-web-devicons", 
+    event = "VeryLazy" 
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" }
+  },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
