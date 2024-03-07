@@ -4,4 +4,4 @@
   its in nvim\lua\core\init.lua  look for **g.mapleader = ","**
 
 
-<sub> all my mappings can be found in custom/mappings.lua</sub>
+<sub> all my mappings can be found in custom/mappings.lua OR by bringing up nvchad leader + c + h</sub>
