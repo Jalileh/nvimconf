@@ -24,44 +24,48 @@ M.custom_mappings = {
 
     ["<leader>tg"] = { "<cmd>Telescope live_grep<CR>", "Telescope live_grep" },
     ["<leader>tb"] = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Telescope current_buffer_fuzzy_find" },
-    ["<leader>ut"] = {"<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>", "Toggle undotree and focus"},
+    ["<leader>ut"] = { "<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>", "Toggle undotree and focus" },
     ["<leader>wtd"] = { "<cmd>vsplit term://%:p:h//bash<CR>", "Open bash terminal split" },
     ["<leader>wtw"] = { "<cmd>lua open_bash_terminal_start_dir()<CR>", "Open Bash terminal in current directory" },
     ["<leader>gc"] = { "<cmd>lua generate_organizing_text()<CR>", "Generate organizing section in C++ file" },
-      -- enter current directory and set its focus
+    -- enter current directory and set its focus
 
     ["<leader>wcd"] = { "<cmd>lua SetCDtoBufferCWD()<CR>", "Point Neovim to the buffer CWD" },
     ["<leader>wcp"] = { "<cmd>lua SetBackPreviousCD()<CR>", "Point Neovim to Previous Cached CWD" },
   },
 }
 
-PrevCWD = "unset"
- 
-Prev_state = 0
+-- very insecure lua code, ive yet formed any neurons to write any good algorithm or code
+Cwdhandler = {}
+Cwdhandler.PreviousCWD = vim.fn.getcwd()
+Cwdhandler.Status = 0
 -- enter current directory and set its focus
 function SetCDtoBufferCWD()
-  local buffercwd = vim.fn.expand('%:p:h')
-  print(vim.fn.expand('%:p:h') )
-   
-      PrevCWD = vim.fn.getcwd()
+  local buffercwd = vim.fn.expand "%:p:h"
+  print("Neovim CWD pointed to: " .. vim.fn.expand "%:p:h")
 
-  if Prev_state == 0 then
-      Prev_state = 1
-   elseif Prev_state == 1 then
-      Prev_state = 0
-   else
-     Prev_state = Prev_state + 1
+  Cwdhandler.PreviousCWD = vim.fn.getcwd()
+
+  if Cwdhandler.Status == 0 then
+    Cwdhandler.Status = 1
+  elseif Cwdhandler.Status == 1 then
+    Cwdhandler.Status = 0
+  else
+    Cwdhandler.Status = Cwdhandler.Status + 1
   end
 
-   vim.cmd("cd " .. buffercwd)
+  vim.cmd("cd " .. buffercwd)
 end
 
-switchback = "unset"
+SwitchCache = "unset"
 function SetBackPreviousCD()
-   print(PrevCWD)
-   switchback = vim.fn.getcwd() 
-  vim.cmd("cd " .. PrevCWD)
-  PrevCWD = switchback
+  print(Cwdhandler.PreviousCWD)
+   
+  SwitchCache = vim.fn.getcwd()
+
+  vim.cmd("cd " .. Cwdhandler.PreviousCWD)
+
+  Cwdhandler.PreviousCWD = SwitchCache
 end
 
 -- Function to open a Bash terminal split to the right using the directory where Neovim was started
