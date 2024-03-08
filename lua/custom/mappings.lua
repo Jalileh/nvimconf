@@ -17,7 +17,19 @@ M.general = {
     [">"] = { ">gv", "indent" },
   },
 }
-
+M.dap = {
+  plugin = true,
+  n = {
+    ["<leader>db"] = {
+      "<cmd> DapToggleBreakpoint <CR>",
+      "Add breakpoint at line",
+    },
+    ["<leader>dr"] = {
+      "<cmd> DapContinue <CR>",
+      "Start or continue the debugger",
+    }
+  }
+}
 -- Define your custom mappings
 M.custom_mappings = {
   n = {
@@ -25,11 +37,14 @@ M.custom_mappings = {
     ["<leader>tg"] = { "<cmd>Telescope live_grep<CR>", "Telescope live_grep" },
     ["<leader>tb"] = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Telescope current_buffer_fuzzy_find" },
     ["<leader>ut"] = { "<cmd>UndotreeToggle<CR> | <cmd>UndotreeFocus<CR>", "Toggle undotree and focus" },
-    ["<leader>wtd"] = { "<cmd>lua SetCDtoBufferCWD()<CR> | <cmd>vsplit term://%:p:h//bash<CR> | <cmd>lua SetBackPreviousCD()<CR>", "Open bash terminal split in buffer dir" },
+    ["<leader>wtd"] = {
+      "<cmd>lua SetCDtoBufferCWD()<CR> | <cmd>vsplit term://%:p:h//bash<CR> | <cmd>lua SetBackPreviousCD()<CR>",
+      "Open bash terminal split in buffer dir",
+    },
     ["<leader>wtw"] = { "<cmd>lua open_bash_terminal_start_dir()<CR>", "Open Bash terminal in current directory" },
     ["<leader>gc"] = { "<cmd>lua generate_organizing_text()<CR>", "Generate organizing section in C++ file" },
     ["<leader>tt"] = { "<cmd>TroubleToggle<CR>", "toggle trouble" },
-    
+
     -- enter current directory and set its focus
     ["<leader>wcd"] = { "<cmd>lua SetCDtoBufferCWD()<CR>", "Point Neovim to the buffer CWD" },
     -- switchback to last cwd
@@ -62,7 +77,7 @@ end
 SwitchCache = "unset"
 function SetBackPreviousCD()
   print(Cwdhandler.PreviousCWD)
-   
+
   SwitchCache = vim.fn.getcwd()
 
   vim.cmd("cd " .. Cwdhandler.PreviousCWD)

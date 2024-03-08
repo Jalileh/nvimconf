@@ -4,7 +4,7 @@ local options = {
 
 	formatters_by_ft = {
 		lua = { "stylua" },
-
+    cpp = {{ "clangd", "clang-format", "clang", "LSP"}},
 		javascript = { "prettier" },
 		css = { "prettier" },
 		html = { "prettier" },
