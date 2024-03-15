@@ -1,18 +1,24 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
 
   -- Override plugin definition options
-
+  {
+    event = "VeryLazy",
+    "mfussenegger/nvim-dap",
+    config = function()
+      require("nvim-web-devicons").get_icons()
+    end,
+  },
 
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
     dependencies = "mfussenegger/nvim-dap",
     config = function()
-      local dap = require("dap")
-      local dapui = require("dapui")
+      local dap = require "dap"
+      local dapui = require "dapui"
       dapui.setup()
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
@@ -23,15 +29,16 @@ local plugins = {
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
-    end
+    end,
   },
-  
+
   {
     "mfussenegger/nvim-dap",
     config = function(_, _)
-      require("core.utils").load_mappings("dap")
-    end
+      require("core.utils").load_mappings "dap"
+    end,
   },
+
   {
     "jay-babu/mason-nvim-dap.nvim",
     event = "VeryLazy",
@@ -40,11 +47,10 @@ local plugins = {
       "mfussenegger/nvim-dap",
     },
     opts = {
-      handlers = {}
+      handlers = {},
     },
   },
- 
-  
+
   {
     "jose-elias-alvarez/null-ls.nvim",
     event = "VeryLazy",
@@ -52,7 +58,17 @@ local plugins = {
       return require "custom.configs.null-ls"
     end,
   },
+
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+  },
   
+  
+  -- nvchad edits below
+
+
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -64,7 +80,7 @@ local plugins = {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
 
   {
@@ -86,8 +102,6 @@ local plugins = {
     end,
   },
 
-
- 
   {
     "stevearc/conform.nvim",
     --  for users those who want auto-save conform + lazyloading!
@@ -98,19 +112,12 @@ local plugins = {
     event = "VeryLazy",
   },
   {
-    'mbbill/undotree',
-    lazy = false
+    "mbbill/undotree",
+    lazy = false,
   },
-  
-  { 
-    "nvim-tree/nvim-web-devicons", 
-    lazy = false
-  },
-  {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    lazy = false
-  },
+
+ 
+
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
