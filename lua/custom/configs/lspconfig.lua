@@ -59,10 +59,13 @@ require("lspconfig").clangd.setup {
    
   cmd = {
     "clangd",
-    "--offset-encoding=utf-16",
-    "--header-insertion=never",
+    "--background-index",
+    "--completion-style=detailed",
     "--function-arg-placeholders=1",
+    "--offset-encoding=utf-16",
     
+    "--fallback-style=llvm",
+    "--header-insertion=never",
   },
 }
  
