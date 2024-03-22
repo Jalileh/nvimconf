@@ -19,13 +19,11 @@ local plugins = {
 
       -- Enable specific linters for desired file types
  
-    
-      g.ale_linters = {
-         sh = {'bashate', 'cspell', 'language_server', 'shell', 'shellcheck'},
-         cpp = {  'clangtidy', 'clangcheck'}
+      vim.g.ale_linters = {
+        sh = { 'bashate', 'cspell', 'language_server', 'shell', 'shellcheck' },
+        cpp = { 'clangtidy', 'clangcheck' }
       }
-      
-      
+  
       
       
        g.ale_lint_on_text_changed = 'never'
