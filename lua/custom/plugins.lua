@@ -21,12 +21,11 @@ local plugins = {
  
     
       g.ale_linters = {
-         sh = {'bashate', 'cspell', 'language_server', 'shell', 'shellcheck'}
+         sh = {'bashate', 'cspell', 'language_server', 'shell', 'shellcheck'},
+         cpp = {  'clangtidy', 'clangcheck'}
       }
       
-       g.ale_linters = {
-          cpp = {  'clangtidy', 'clangcheck'}
-       }
+      
       
       
        g.ale_lint_on_text_changed = 'never'
