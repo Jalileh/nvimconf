@@ -8,12 +8,35 @@ local plugins = {
     config = function()
       -- Configuration goes here.
       local g = vim.g
+      local b = vim.b
 
-      g.ale_ruby_rubocop_auto_correct_all = 1
+      -- " Only run linters named in ale_linters settings."
+       g.ale_linters_explicit = 1
+  
       
+      -- Disable all linters
+  
+
+      -- Enable specific linters for desired file types
+ 
+    
       g.ale_linters = {
-         bash = { "bash_language_server" },
+         sh = {'bashate', 'cspell', 'language_server', 'shell', 'shellcheck'}
       }
+      
+       g.ale_linters = {
+          cpp = {  'clangtidy', 'clangcheck'}
+       }
+      
+      
+       g.ale_lint_on_text_changed = 'never'
+       g.ale_lint_on_insert_leave = 1
+       g.ale_lint_on_enter = 0 
+ 
+ 
+      
+      
+      
     end,
   },
   -- Override plugin definition options
