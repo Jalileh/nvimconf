@@ -3,9 +3,9 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
 
+local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver",  "pyright" }
-
+local servers = { "html", "cssls", "tsserver", "pyright" }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
@@ -13,13 +13,22 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-local cmp_nvim_lsp = require "cmp_nvim_lsp"
+lspconfig.bashls.setup {
 
-require("lspconfig").clangd.setup {
+  cmd = { "bash-language-server", "start" },
+  filetypes = { "sh", "bash" },
+  on_attach = on_attach, -- Assign the defined on_attach function
+  capabilities = cmp_nvim_lsp.default_capabilities(),
+  flags = {
+    debounce_text_changes = 150,
+  },
+}
+
+lspconfig.clangd.setup {
   on_attach = function(client, bufnr)
-    print("clangd attached")  -- Move print statement inside the on_attach function
-    on_attach(client, bufnr)  -- Call the original on_attach function
-    
+    print "clangd attached" -- Move print statement inside the on_attach function
+    on_attach(client, bufnr) -- Call the original on_attach function
+
     -- Your custom on_attach function here
     -- You can define custom key mappings, highlight settings, etc.
 
@@ -56,20 +65,18 @@ require("lspconfig").clangd.setup {
     }
   end,
   capabilities = cmp_nvim_lsp.default_capabilities(),
-   
+
   cmd = {
     "clangd",
     "--background-index",
     "--completion-style=detailed",
     "--function-arg-placeholders=1",
     "--offset-encoding=utf-16",
-    
+
     "--fallback-style=llvm",
     "--header-insertion=never",
   },
 }
- 
- 
 
 -- local clangd_config = {
 --   on_attach = function(client, bufnr)
@@ -138,7 +145,7 @@ require("lspconfig").clangd.setup {
 --     )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
 --       fname
 --     ) or require("lspconfig.util").find_git_ancestor(fname)
---   end,
+--   end,kkaakkkkkkkk
 --   settings = {
 --     -- Additional settings for clangd
 --     -- You can customize these settings based on your project requirements
@@ -160,8 +167,4 @@ require("lspconfig").clangd.setup {
 --   },
 -- }
 
-
-
 -- lspconfig.pyright.setup { blabla}
-
-

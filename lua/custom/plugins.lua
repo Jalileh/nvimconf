@@ -2,7 +2,20 @@ local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
+  {
+    event = "VeryLazy",
+    "dense-analysis/ale",
+    config = function()
+      -- Configuration goes here.
+      local g = vim.g
 
+      g.ale_ruby_rubocop_auto_correct_all = 1
+      
+      g.ale_linters = {
+         bash = { "bash_language_server" },
+      }
+    end,
+  },
   -- Override plugin definition options
   {
     event = "VeryLazy",
@@ -64,16 +77,17 @@ local plugins = {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = false,
   },
-  
+
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
+    end,
   },
-  
-  -- nvchad edits below
 
+  -- nvchad edits below
 
   {
     "neovim/nvim-lspconfig",
@@ -121,8 +135,6 @@ local plugins = {
     "mbbill/undotree",
     lazy = false,
   },
-
- 
 
   -- To make a plugin not be loaded
   -- {
