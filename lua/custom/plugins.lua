@@ -21,7 +21,8 @@ local plugins = {
  
       vim.g.ale_linters = {
         sh = { 'bashate', 'cspell', 'language_server', 'shell', 'shellcheck' },
-        cpp = { 'clangtidy', 'clangcheck' }
+        bash = { 'bashate', 'cspell', 'language_server', 'shell', 'shellcheck' },
+        cpp = { 'clangtidy'    }
       }
   
       
