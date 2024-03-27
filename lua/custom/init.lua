@@ -7,3 +7,4 @@
 --   pattern = "*",
 --   command = "tabdo wincmd =",
 -- })
+ 

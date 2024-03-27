@@ -61,4 +61,6 @@ M.nvimtree = {
   },
 }
 
+-- Disable indent-blankline
+ 
 return M
