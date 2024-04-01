@@ -73,7 +73,7 @@ lspconfig.clangd.setup {
     "--function-arg-placeholders=1",
     "--offset-encoding=utf-16",
 
-    "--fallback-style=llvm",
+    
     "--header-insertion=never",
   },
 }
