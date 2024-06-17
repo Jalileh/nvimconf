@@ -1,10 +1,5 @@
- 
- 
--- local autocmd = vim.api.nvim_create_autocmd
 
--- Auto resize panes when resizing nvim window
--- autocmd("VimResized", {
---   pattern = "*",
---   command = "tabdo wincmd =",
--- })
- 
+vim.opt.shell = "c:/PROGRA~1/Git/bin/bash.exe"
+vim.g.terminal_emulator='c:/PROGRA~1/Git/bin/bash.exe'
+
+vim.opt.shellcmdflag = '-c'
