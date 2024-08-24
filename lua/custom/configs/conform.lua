@@ -6,6 +6,8 @@ local options = {
     lua = { "stylua" },
     cpp = { { "clangd", "clang-format", "clang", "LSP" } },
     javascript = { "prettier" },
+
+    python = { { "pyright", "black" } },
     css = { "prettier" },
     html = { "prettier" },
 
