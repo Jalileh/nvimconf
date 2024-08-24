@@ -52,6 +52,7 @@ M.general = {
       end,
       "LSP formatting",
     },
+      
   },
 
   t = {

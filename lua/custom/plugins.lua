@@ -11,30 +11,21 @@ local plugins = {
       local b = vim.b
 
       -- " Only run linters named in ale_linters settings."
-       g.ale_linters_explicit = 1
-  
-      
+      g.ale_linters_explicit = 1
+
       -- Disable all linters
-  
 
       -- Enable specific linters for desired file types
- 
+
       vim.g.ale_linters = {
-        sh = { 'bashate', 'cspell', 'language_server', 'shell', 'shellcheck' },
-        bash = { 'bashate', 'cspell', 'language_server', 'shell', 'shellcheck' },
-        cpp = { 'clangtidy'    }
+        sh = { "bashate", "cspell", "language_server", "shell", "shellcheck" },
+        bash = { "bashate", "cspell", "language_server", "shell", "shellcheck" },
+        cpp = { "clangtidy" },
       }
-  
-      
-      
-       g.ale_lint_on_text_changed = 'never'
-       g.ale_lint_on_insert_leave = 1
-       g.ale_lint_on_enter = 0 
- 
- 
-      
-      
-      
+
+      g.ale_lint_on_text_changed = "never"
+      g.ale_lint_on_insert_leave = 1
+      g.ale_lint_on_enter = 0
     end,
   },
   -- Override plugin definition options
@@ -43,14 +34,6 @@ local plugins = {
     "mfussenegger/nvim-dap",
     config = function()
       require("nvim-web-devicons").get_icons()
-    end,
-  },
-
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = "VeryLazy",
-    opts = function()
-      return require "custom.configs.null-ls"
     end,
   },
 
