@@ -10,12 +10,12 @@ M.treesitter = {
     "typescript",
     "tsx",
     "c",
- 
+
     "markdown",
     "markdown_inline",
   },
   indent = {
-    enable = true,
+    enable = false,
     -- disable = {
     --   "python"
     -- },
@@ -38,7 +38,7 @@ M.mason = {
     -- c/cpp stuff
     "clangd",
     "clang-format",
- 
+
     "codelldb",
     -- shell stuff
     "shfmt",
@@ -62,5 +62,5 @@ M.nvimtree = {
 }
 
 -- Disable indent-blankline
- 
+
 return M

@@ -3,7 +3,7 @@ local options = {
   lsp_fallback = true,
 
   formatters_by_ft = {
-    lua = { "stylua" },
+    -- lua = { { "stylua" } },
     cpp = { { "clangd", "clang-format", "clang", "LSP" } },
     javascript = { "prettier" },
 
@@ -29,4 +29,5 @@ require("conform").formatters.prettier = {
   prepend_args = { "--tab-width", "3" },
 }
 
+require("conform").formatters.stylua = {}
 require("conform").setup(options)
