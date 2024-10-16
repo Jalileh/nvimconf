@@ -12,6 +12,7 @@ for _, lsp in ipairs(servers) do
       capabilities = capabilities,
    }
 end
+
 lspconfig.lua_ls.setup {
    capabilities = capabilities,
    on_attach = on_attach,
@@ -29,18 +30,17 @@ lspconfig.lua_ls.setup {
       },
    },
 }
-
+lspconfig.pyright.setup {}
 lspconfig.clangd.setup {
    on_attach = function(client, bufnr)
       print "clangd attached"  -- Move print statement inside the on_attach function
-      on_attach(client, bufnr) -- Call the original on_attach function
 
       -- Your custom on_attach function here
       -- You can define custom key mappings, highlight settings, etc.
 
       -- Merge capabilities
-      client.resolved_capabilities.document_formatting = true
-      client.resolved_capabilities.document_range_formatting = true
+      client.server_capabilities.document_formatting = true
+      client.server_capabilities.document_range_formatting = true
 
       -- retarded ai dosent even make this fucking do it
       client.config.cmd = {
