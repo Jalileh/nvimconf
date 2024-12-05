@@ -3,12 +3,13 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
 
+
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "pyright"}
+local servers = { "html", "cssls", "ts_ls" }
 for _, lsp in ipairs(servers) do
    lspconfig[lsp].setup {
-      on_attach = on_attach,
+      on_attach = on_attach, -- needed for lsp keybinds
       capabilities = capabilities,
    }
 end
@@ -30,12 +31,16 @@ lspconfig.lua_ls.setup {
       },
    },
 }
-lspconfig.pyright.setup {}
+lspconfig.pyright.setup {
+   capabilities = capabilities,
+   on_attach = on_attach,
+
+}
 
 
 lspconfig.clangd.setup {
    on_attach = function(client, bufnr)
-      print "clangd attached"  -- Move print statement inside the on_attach function
+      print "clangd attached" -- Move print statement inside the on_attach function
 
       -- Your custom on_attach function here
       -- You can define custom key mappings, highlight settings, etc.

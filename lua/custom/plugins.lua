@@ -3,39 +3,33 @@ local overrides = require "custom.configs.overrides"
 ---@type NvPluginSpec[]
 local plugins = {
    {
-         event = "VeryLazy",
+      event = "VeryLazy",
       "dense-analysis/ale",
       config = function()
          -- Configuration goes here.
          local g = vim.g
          local b = vim.b
-   
+
          -- " Only run linters named in ale_linters settings."
          g.ale_linters_explicit = 1
-   
+
          -- Disable all linters
-   
+
          -- Enable specific linters for desired file types
-   
+
          vim.g.ale_linters = {
             sh = { "bashate", "cspell", "language_server", "shell", "shellcheck" },
             bash = { "bashate", "cspell", "language_server", "shell", "shellcheck" },
             cpp = { "clangtidy" },
          }
-   
+
          g.ale_lint_on_text_changed = "never"
          g.ale_lint_on_insert_leave = 1
          g.ale_lint_on_enter = 0
       end,
    },
- 
-   
-   {
-      "folke/trouble.nvim",
-      dependencies = { "nvim-tree/nvim-web-devicons" },
-      lazy = false,
-   },
-   
+
+
    {
       "ray-x/lsp_signature.nvim",
       event = "VeryLazy",
@@ -44,9 +38,8 @@ local plugins = {
          require("lsp_signature").setup(opts)
       end,
    },
-   
- 
-   
+
+
    {
       "neovim/nvim-lspconfig",
       config = function()
@@ -54,8 +47,8 @@ local plugins = {
          require "custom.configs.lspconfig"
       end, -- Override to setup mason-lspconfig
    },
-   
- 
+
+
    {
       "williamboman/mason.nvim",
       opts = overrides.mason,
@@ -67,6 +60,8 @@ local plugins = {
    },
 
    {
+
+      event = "VeryLazy",
       "nvim-tree/nvim-tree.lua",
       opts = overrides.nvimtree,
    },
@@ -80,6 +75,8 @@ local plugins = {
       end,
    },
 
+
+
    {
 
       event = "VeryLazy",
@@ -90,10 +87,26 @@ local plugins = {
          require "custom.configs.conform"
       end,
    },
+
+
    {
       "mbbill/undotree",
       lazy = false,
    },
+
+   -- {
+   --    event = "VeryLazy",
+   --    "folke/trouble.nvim",
+   --    dependencies = { "nvim-tree/nvim-web-devicons" },
+   --
+   --
+   -- },
+   {
+      "folke/trouble.nvim",
+      opts = {}, -- for default options, refer to the configuration section for custom setup.
+      cmd = "Trouble",
+      -- config in custom/mappings.lua instead
+   }
 
    -- To make a plugin not be loaded
    -- {
