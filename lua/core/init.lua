@@ -15,10 +15,10 @@ opt.showmode = false
 opt.clipboard = "unnamedplus"
 opt.cursorline = true
 
--- Indenting
-opt.expandtab = true
+-- Indenting 
+opt.expandtab = false -- @bugaware = ghost characters/ invisible start of words
 opt.shiftwidth = 3
-opt.smartindent = true
+opt.smartindent = false
 opt.tabstop = 2
 opt.softtabstop = 2
 

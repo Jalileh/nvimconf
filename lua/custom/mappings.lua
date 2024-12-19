@@ -1,4 +1,62 @@
 ---@type MappingsTable
+
+Cwdhandler = {}
+Cwdhandler.PreviousCWD = vim.fn.getcwd()
+Cwdhandler.Status = 0
+-- enter current directory and set its focus
+function SetCDtoBufferCWD()
+   local buffercwd = vim.fn.expand "%:p:h"
+   print("Neovim CWD pointed to: " .. vim.fn.expand "%:p:h")
+
+   Cwdhandler.PreviousCWD = vim.fn.getcwd()
+
+   if Cwdhandler.Status == 0 then
+      Cwdhandler.Status = 1
+   elseif Cwdhandler.Status == 1 then
+      Cwdhandler.Status = 0
+   else
+      Cwdhandler.Status = Cwdhandler.Status + 1
+   end
+
+   vim.cmd("cd " .. buffercwd)
+end
+
+SwitchCache = "unset"
+function SetBackPreviousCD()
+   print(Cwdhandler.PreviousCWD)
+
+   SwitchCache = vim.fn.getcwd()
+
+   vim.cmd("cd " .. Cwdhandler.PreviousCWD)
+
+   Cwdhandler.PreviousCWD = SwitchCache
+end
+
+-- Function to generate organizing text in a C++ file
+function generate_organizing_text()
+   local section_name = "@s." .. vim.fn.input "Enter section name: "
+
+   local organizing_text = {
+      " ",
+      "////       ",
+      "////       ",
+      "////       ",
+      "////       ",
+      "////  " .. section_name,
+      "////",
+      string.rep("/", 70),
+      string.rep("/", 70),
+      " ",
+   }
+
+   local current_line = vim.fn.line "."
+   for _, line in ipairs(organizing_text) do
+      vim.api.nvim_buf_set_lines(0, current_line - 1, current_line - 1, true, { line })
+   end
+
+   vim.cmd(tostring(current_line + #organizing_text) .. "j")
+end
+
 local M = {}
 
 M.general = {
@@ -67,154 +125,10 @@ M.custom_mappings = {
       ["<leader>gc"] = { "<cmd>lua generate_organizing_text()<CR>", "Generate organizing section in C++ file" },
       ["<leader>tt"] = { "<cmd>Trouble diagnostics toggle<cr>", "toggle trouble" },
 
-      -- keys = {
-      --    {
-      --       "<leader>xx",
-      --       "<cmd>Trouble diagnostics toggle<cr>",
-      --       desc = "Diagnostics (Trouble)",
-      --    },
-      --    {
-      --       "<leader>xX",
-      --       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      --       desc = "Buffer Diagnostics (Trouble)",
-      --    },
-      --    {
-      --       "<leader>cs",
-      --       "<cmd>Trouble symbols toggle focus=false<cr>",
-      --       desc = "Symbols (Trouble)",
-      --    },
-      --    {
-      --       "<leader>cl",
-      --       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      --       desc = "LSP Definitions / references / ... (Trouble)",
-      --    },
-      --    {
-      --       "<leader>xL",
-      --       "<cmd>Trouble loclist toggle<cr>",
-      --       desc = "Location List (Trouble)",
-      --    },
-      --    {
-      --    "<leader>xQ",
-      --    "<cmd>Trouble qflist toggle<cr>",
-      --    desc = "Quickfix List (Trouble)",
-      -- },
-      -- },
-      -- enter current directory and set its focus
       ["<leader>wcd"] = { "<cmd>lua SetCDtoBufferCWD()<CR>", "Point Neovim to the buffer CWD" },
       -- switchback to last cwd
       ["<leader>wcp"] = { "<cmd>lua SetBackPreviousCD()<CR>", "Point Neovim to Previous Cached CWD" },
 
-      -- ["gD"] = {
-      --    function()
-      --       vim.lsp.buf.declaration()
-      --    end,
-      --    "LSP declaration",
-      -- },
-      --
-      -- ["gd"] = {
-      --    function()
-      --       vim.lsp.buf.definition()
-      --    end,
-      --    "LSP definition",
-      -- },
-      --
-      -- ["K"] = {
-      --    function()
-      --       vim.lsp.buf.hover()
-      --    end,
-      --    "LSP hover",
-      -- },
-      --
-      -- ["gi"] = {
-      --    function()
-      --       vim.lsp.buf.implementation()
-      --    end,
-      --    "LSP implementation",
-      -- },
-      --
-      -- ["<leader>ls"] = {
-      --    function()
-      --       vim.lsp.buf.signature_help()
-      --    end,
-      --    "LSP signature help",
-      -- },
-      --
-      -- ["<leader>D"] = {
-      --    function()
-      --       vim.lsp.buf.type_definition()
-      --    end,
-      --    "LSP definition type",
-      -- },
-      --
-      -- ["<leader>ra"] = {
-      --    function()
-      --       require("nvchad.renamer").open()
-      --    end,
-      --    "LSP rename",
-      -- },
-      --
-      -- ["<leader>ca"] = {
-      --    function()
-      --       vim.lsp.buf.code_action()
-      --    end,
-      --    "LSP code action",
-      -- },
-      --
-      -- ["gr"] = {
-      --    function()
-      --       vim.lsp.buf.references()
-      --    end,
-      --    "LSP references",
-      -- },
-      --
-      -- ["<leader>lf"] = {
-      --    function()
-      --       vim.diagnostic.open_float { border = "rounded" }
-      --    end,
-      --    "Floating diagnostic",
-      -- },
-      --
-      -- ["[d"] = {
-      --    function()
-      --       vim.diagnostic.goto_prev { float = { border = "rounded" } }
-      --    end,
-      --    "Goto prev",
-      -- },
-      --
-      -- ["]d"] = {
-      --    function()
-      --       vim.diagnostic.goto_next { float = { border = "rounded" } }
-      --    end,
-      --    "Goto next",
-      -- },
-
-      -- ["<leader>q"] = {
-      --    function()
-      --       vim.diagnostic.setloclist()
-      --    end,
-      --    "Diagnostic setloclist",
-      -- },
-      --
-      -- ["<leader>wa"] = {
-      --    function()
-      --       vim.lsp.buf.add_workspace_folder()
-      --    end,
-      --    "Add workspace folder",
-      -- },
-      --
-      -- ["<leader>wr"] = {
-      --    function()
-      --       vim.lsp.buf.remove_workspace_folder()
-      --    end,
-      --    "Remove workspace folder",
-      -- },
-      --
-      -- ["<leader>wl"] = {
-      --    function()
-      --       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      --    end,
-      --    "List workspace folders",
-      -- },
 
    },
 
