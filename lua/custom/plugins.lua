@@ -66,6 +66,7 @@ local plugins = {
       opts = overrides.nvimtree,
    },
 
+	 
    -- Install a plugin
    {
       "max397574/better-escape.nvim",
@@ -94,19 +95,27 @@ local plugins = {
       lazy = false,
    },
 
-   -- {
-   --    event = "VeryLazy",
-   --    "folke/trouble.nvim",
-   --    dependencies = { "nvim-tree/nvim-web-devicons" },
-   --
-   --
-   -- },
+   {
+      lazy = false,
+      "tpope/vim-fugitive",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+   },
+	 
+	 
    {
       "folke/trouble.nvim",
       opts = {}, -- for default options, refer to the configuration section for custom setup.
       cmd = "Trouble",
       -- config in custom/mappings.lua instead
-   }
+   },
+
+	 -- more themes 
+	 
+	 {
+			"scottmckendry/cyberdream.nvim",
+			
+	 },
+	 
 
    -- To make a plugin not be loaded
    -- {
