@@ -101,6 +101,28 @@ local plugins = {
       dependencies = { "nvim-tree/nvim-web-devicons" },
    },
 	 
+	 -- nvim v0.8.0
+	 {
+			 "kdheepak/lazygit.nvim",
+			 lazy = false,
+			 cmd = {
+					 "LazyGit",
+					 "LazyGitConfig",
+					 "LazyGitCurrentFile",
+					 "LazyGitFilter",
+					 "LazyGitFilterCurrentFile",
+			 },
+			 keys = {
+				 { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+			 },
+			 dependencies = {
+					 "nvim-telescope/telescope.nvim",
+					 "nvim-lua/plenary.nvim",
+			 },
+			 config = function()
+					 require("telescope").load_extension("lazygit")
+			 end,
+	 },
 	 
    {
       "folke/trouble.nvim",
