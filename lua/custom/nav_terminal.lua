@@ -65,6 +65,13 @@ function generate_organizing_text()
 end
 
 
+vim.api.nvim_set_keymap( 
+  "n",
+  "gt",
+	"<cmd>lua require('telescope.builtin').lsp_references()<cr>",
+   { noremap = true, silent = true }
+)
+
 vim.api.nvim_set_keymap(
    "n",
    "<leader>wth",
