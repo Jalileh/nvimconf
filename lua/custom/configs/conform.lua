@@ -6,8 +6,7 @@ local options = {
       -- lua = { { "stylua" } },
       cpp = { { "clangd", "clang-format", "clang", "LSP" } },
       javascript = { "prettier" },
-
-      python = { { "pyright", "black" } },
+      python = { {  "black" } },
       css = { "prettier" },
       html = { "prettier" },
       go = { "gofumpt" },
@@ -28,6 +27,9 @@ local options = {
 -- Override prettier's default indent type
 local conform = require("conform")
 
+conform.formatters.black = {
+	prepend_args = { "-l", "75", "--target-version", "py311", "--skip-magic-trailing-comma" },
+}
 
 conform.formatters.prettier = {
    prepend_args = { "--tab-width", "3" },
@@ -35,3 +37,5 @@ conform.formatters.prettier = {
 
 conform.formatters.stylua = {}
 conform.setup(options)
+
+
