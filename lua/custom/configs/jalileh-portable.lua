@@ -106,9 +106,9 @@ end
 
 Cwdhandler:LoadCache()
 
-vim.api.nvim_set_keymap("n", "<leader>wcp", ":lua SetCDtoBufferCWD()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wcd", ":lua SetCDtoBufferCWD()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>wcl", ":lua ListCachedDirs()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>wcd", ":lua SetBackPreviousCD()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wcp", ":lua SetBackPreviousCD()<CR>", { noremap = true, silent = true })
 
 
 
