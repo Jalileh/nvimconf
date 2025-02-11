@@ -7,19 +7,28 @@ local lspconfig = require "lspconfig"
 
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "markdown_oxide", "csharp_ls", "html", "cssls", "ts_ls", "gopls" }
+local servers = { "markdown_oxide", "html", "cssls", "ts_ls", "gopls" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
 		on_attach = on_attach, -- needed for lsp keybinds
 		capabilities = capabilities,
 	}
 end
--- An example nvim-lspconfig capabilities setting
 
+lspconfig.csharp_ls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = {
+		csharp = {
+			format = {
+				enable = true,
+				style = "Google"
+			},
+		}
+	}
+})
 
 lspconfig.markdown_oxide.setup({
-	-- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the
-	-- Create Unresolved File code action, resolving completions for unindexed code blocks, ...
 	capabilities = vim.tbl_deep_extend(
 		'force',
 		capabilities,
