@@ -9,6 +9,7 @@ local options = {
 		python = { { "black" } },
 		css = { "prettier" },
 		html = { "prettier" },
+		cs = { "astyle" },
 		go = { "gofumpt" },
 		sh = { "shfmt" },
 	},
@@ -36,17 +37,10 @@ conform.formatters.prettier = {
 }
 
 
-conform.setup({
-	formatters_by_ft = {
-		cs = { "clang_format" },
-	},
-	formatters = {
-		clang_format = {
-			command = "clang-format",
-			args = { "--style={BasedOnStyle: LLVM, BreakBeforeBraces: Attach, IndentWidth: 3}" },
-		},
-	},
-})
+conform.formatters.astyle = {
+	command = "astyle",
+	args = { "--style=java", "--indent=spaces=3" },
+}
 
 conform.formatters.stylua = {}
 
