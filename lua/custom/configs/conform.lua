@@ -36,5 +36,18 @@ conform.formatters.prettier = {
 }
 
 
+conform.setup({
+	formatters_by_ft = {
+		cs = { "clang_format" },
+	},
+	formatters = {
+		clang_format = {
+			command = "clang-format",
+			args = { "--style={BasedOnStyle: LLVM, BreakBeforeBraces: Attach, IndentWidth: 3}" },
+		},
+	},
+})
+
 conform.formatters.stylua = {}
+
 conform.setup(options)

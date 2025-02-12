@@ -7,26 +7,13 @@ local lspconfig = require "lspconfig"
 
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "markdown_oxide", "html", "cssls", "ts_ls", "gopls" }
+local servers = { "markdown_oxide", "html", "csharp_ls", "cssls", "ts_ls", "gopls" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
 		on_attach = on_attach, -- needed for lsp keybinds
 		capabilities = capabilities,
 	}
 end
-
-lspconfig.csharp_ls.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = {
-		csharp = {
-			format = {
-				enable = true,
-				style = "Google"
-			},
-		}
-	}
-})
 
 lspconfig.markdown_oxide.setup({
 	capabilities = vim.tbl_deep_extend(
@@ -118,94 +105,3 @@ lspconfig.clangd.setup {
 		"--header-insertion=never",
 	},
 }
-
--- local clangd_config = {
---   on_attach = function(client, bufnr)
---     print("clangd attached")
---     -- Your custom on_attach function here
---     -- You can define custom key mappings, highlight settings, etc.
---   end,
---   capabilities = cmp_nvim_lsp.default_capabilities(),
---   cmd = {
---     "clangd",
---     "--background-index",
---     "--header-insertion=iwyu",
---     "--completion-style=detailed",
---     "--function-arg-placeholders",
---     "-j4",
---     "--fallback-style=llvm",
---   },
---   root_dir = lspconfig.util.root_pattern(".git", "compile_commands.json", "CMakeLists.txt"),
---   settings = {
---     clangd = {
---       compileCommandsDirectory = "build",
---       indexer = {
---         threads = 4,
---         background = true,
---         trace = "verbose",
---         pchStorage = "memory",
---       },
---     },
---   },
---   init_options = {
---     usePlaceholders = true,
---     completeUnimported = true,
---     clangdFileStatus = true,
---   },
--- }
-
--- lspconfig.clangd.setup(clangd_config)
-
--- below one is broken cus gpt is tarded
-
--- lspconfig.clangd.setup {
---   on_attach = function(client, bufnr)
---     -- Your custom on_attach function here
---     -- You can define custom key mappings, highlight settings, etc.
---   end,
---   capabilities = cmp_nvim_lsp.default_capabilities(), -- Enable LSP capabilities for nvim-cmp
---   cmd = {
---     "clangd",
---     "--background-index", -- Index files in the background
---     "--header-insertion=iwyu", -- Use include-what-you-use for header insertion
---     "--completion-style=detailed", -- Detailed completion
---     "--function-arg-placeholders", -- Show function argument placeholders
---     "-j4", -- Use multiple threads
---     "--fallback-style=llvm", -- Fallback to LLVM style
---   },
---   root_dir = function(fname)
---     -- Use lspconfig.util.root_pattern to find the root directory
---     return require("lspconfig.util").root_pattern(
---       "Makefile",
---       "configure.ac",
---       "configure.in",
---       "config.h.in",
---       "meson.build",
---       "meson_options.txt",
---       "build.ninja"
---     )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
---       fname
---     ) or require("lspconfig.util").find_git_ancestor(fname)
---   end,kkaakkkkkkkk
---   settings = {
---     -- Additional settings for clangd
---     -- You can customize these settings based on your project requirements
---     clangd = {
---       compileCommandsDirectory = "build", -- Specify the directory containing compile_commands.json
---       indexer = {
---         threads = 4, -- Number of indexing threads
---         background = true, -- Enable background indexing
---         trace = "verbose", -- Set indexing trace level
---         pchStorage = "memory", -- Set precompiled headers storage mode
---       },
---     },
---   },
---   init_options = {
---     -- Initialize options for clangd
---     usePlaceholders = true, -- Enable placeholders for code completion
---     completeUnimported = true, -- Complete unimported symbols
---     clangdFileStatus = true, -- Enable file status tracking
---   },
--- }
-
--- lspconfig.pyright.setup { blabla}
