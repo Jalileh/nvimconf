@@ -15,6 +15,13 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
+lspconfig.sqlls.setup {
+	capabilities = capabilities,
+	filetypes = { 'sql' },
+	root_dir = function(_)
+		return vim.loop.cwd()
+	end,
+}
 lspconfig.markdown_oxide.setup({
 	capabilities = vim.tbl_deep_extend(
 		'force',
