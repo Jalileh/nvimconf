@@ -61,6 +61,12 @@ local plugins = {
 			"zbirenbaum/copilot.lua", -- for providers='copilot'
 
 			{
+				"zbirenbaum/copilot-cmp",
+				config = function()
+					require("copilot_cmp").setup()
+				end,
+			},
+			{
 				-- support for image pasting
 				"HakonHarnes/img-clip.nvim",
 				event = "VeryLazy",
