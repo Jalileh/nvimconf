@@ -7,7 +7,8 @@ local lspconfig = require "lspconfig"
 
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "markdown_oxide", "html", "csharp_ls", "cssls", "ts_ls", "gopls" }
+local servers = { "markdown_oxide", "html", "csharp_ls", "cssls", "ts_ls", "gopls", "dockerls" }
+
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
 		on_attach = on_attach, -- needed for lsp keybinds
