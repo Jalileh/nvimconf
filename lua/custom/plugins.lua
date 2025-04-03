@@ -42,12 +42,24 @@ local plugins = {
 		lazy = false,
 		version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 		opts = {
+
+			ui = {
+				file_width = 30,
+				output = {
+					height = 15,
+					width = 80,
+				},
+				relative = "win",
+				"editor"
+			},
 			provider = "copilot",
 			auto_suggestions_provider = "copilot",
 			behaviour = {
 				auto_suggestions = true,
 			},
 		},
+
+
 		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 		build = "make",
 		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
