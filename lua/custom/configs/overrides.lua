@@ -1,64 +1,64 @@
 local M = {}
 
 M.treesitter = {
-  ensure_installed = {
-    "vim",
-    "lua",
-    "html",
-    "css",
-    "javascript",
-    "typescript",
-    "tsx",
-    "c",
+	ensure_installed = {
+		"vim",
+		"lua",
+		"html",
+		"css",
+		"javascript",
+		"typescript",
+		"tsx",
+		"c",
 
-    "markdown",
-    "markdown_inline",
-  },
-  indent = {
-    enable = false,
-    -- disable = {
-    --   "python"
-    -- },
-  },
+		"markdown",
+		"markdown_inline",
+	},
+	indent = {
+		enable = false,
+		-- disable = {
+		--   "python"
+		-- },
+	},
 }
 
 M.mason = {
-  ensure_installed = {
-    -- lua stuff
-    "lua-language-server",
-    "stylua",
+	ensure_installed = {
+		"pyright-langserver",
+		-- lua stuff
+		"lua-language-server",
+		"stylua",
 
-    -- web dev stuff
-    "css-lsp",
-    "html-lsp",
-    "typescript-language-server",
-    "deno",
-    "prettier",
+		-- web dev stuff
+		"css-lsp",
+		"html-lsp",
+		"typescript-language-server",
+		"deno",
+		"prettier",
 
-    -- c/cpp stuff
-    "clangd",
-    "clang-format",
-
-    "codelldb",
-    -- shell stuff
-    "shfmt",
-  },
+		-- c/cpp stuff
+		"clangd",
+		"clang-format",
+		"codelldb",
+		-- shell stuff
+		"shfmt",
+	},
 }
 
 -- git support in nvimtree
 M.nvimtree = {
-  git = {
-    enable = true,
-  },
+	git = {
+		enable = true,
+	},
 
-  renderer = {
-    highlight_git = true,
-    icons = {
-      show = {
-        git = true,
-      },
-    },
-  },
+	renderer = {
+		highlight_git = true,
+		icons = {
+			show = {
+				git = true,
+			},
+		},
+	},
 }
 
 -- Disable indent-blankline

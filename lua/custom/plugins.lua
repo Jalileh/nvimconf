@@ -26,6 +26,7 @@ local plugins = {
 			g.ale_lint_on_text_changed = "never"
 			g.ale_lint_on_insert_leave = 0
 			g.ale_lint_on_enter = 1
+			g.ale_lint_on_save = 1
 		end,
 	},
 	{
@@ -33,12 +34,23 @@ local plugins = {
 		cmd = "Copilot",
 		event = "InsertEnter",
 		config = function()
-			require("copilot").setup({})
+			require("copilot").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+			})
+		end,
+	},
+
+	{
+		"zbirenbaum/copilot-cmp",
+		dependencies = { "copilot.lua", "nvim-cmp" },
+		lazy = false,
+		config = function()
+			require("copilot_cmp").setup()
 		end,
 	},
 	{
 		"yetone/avante.nvim",
-		event = "VeryLazy",
 		lazy = false,
 		version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 		opts = {
@@ -55,7 +67,8 @@ local plugins = {
 			provider = "copilot",
 			auto_suggestions_provider = "copilot",
 			behaviour = {
-				auto_suggestions = true,
+				modifiable = true,
+				auto_suggestions = false,
 			},
 		},
 
@@ -72,12 +85,6 @@ local plugins = {
 			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
 			"zbirenbaum/copilot.lua", -- for providers='copilot'
 
-			{
-				"zbirenbaum/copilot-cmp",
-				config = function()
-					require("copilot_cmp").setup()
-				end,
-			},
 			{
 				-- support for image pasting
 				"HakonHarnes/img-clip.nvim",
