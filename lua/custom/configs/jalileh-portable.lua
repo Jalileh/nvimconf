@@ -178,6 +178,22 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true }
 )
 
+
+
+vim.api.nvim_set_keymap(
+	"i",
+	"gg",
+	"<Esc>",
+	{ noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"t",
+	"gg",
+	"<C-\\><C-n>",
+	{ noremap = true, silent = true }
+)
+
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>ld",

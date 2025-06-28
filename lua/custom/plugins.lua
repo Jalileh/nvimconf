@@ -51,7 +51,7 @@ local plugins = {
 	},
 	{
 		"yetone/avante.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 		opts = {
 
@@ -69,6 +69,7 @@ local plugins = {
 			behaviour = {
 				modifiable = true,
 				auto_suggestions = false,
+				enable_cursor_planning_mode = true
 			},
 		},
 
@@ -94,7 +95,7 @@ local plugins = {
 
 
 					default = {
-						embed_image_as_base64 = false,
+						embed_image_as_base64 = true,
 						prompt_for_file_name = false,
 						drag_and_drop = {
 							insert_mode = true,
@@ -154,13 +155,6 @@ local plugins = {
 
 
 	-- Install a plugin
-	{
-		"max397574/better-escape.nvim",
-		event = "InsertEnter",
-		config = function()
-			require("better_escape").setup()
-		end,
-	},
 
 
 
