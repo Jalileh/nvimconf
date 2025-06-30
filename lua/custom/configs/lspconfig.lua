@@ -7,7 +7,7 @@ local lspconfig = require "lspconfig"
 
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "markdown_oxide", "html", "csharp_ls", "cssls", "ts_ls", "gopls", "dockerls" }
+local servers = { "markdown_oxide", "html", "cssls", "ts_ls", "gopls", "dockerls" } -- Removed "csharp_ls"
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
@@ -112,4 +112,62 @@ lspconfig.clangd.setup {
 
 		"--header-insertion=never",
 	},
+}
+
+-- OmniSharp configuration - Minimal version for testing
+local omnisharp_bin = vim.fn.stdpath("data") .. "/mason/packages/omnisharp/OmniSharp.dll"
+
+if vim.fn.filereadable(omnisharp_bin) == 0 then
+	print("Error: OmniSharp.dll not found at: " .. omnisharp_bin)
+	print("Please ensure OmniSharp is installed via Mason: `:Mason`")
+	return -- Exit this setup if OmniSharp.dll isn't there
+end
+
+lspconfig.omnisharp.setup {
+	on_attach = on_attach,     -- Use your existing on_attach function
+	capabilities = capabilities, -- Use your existing capabilities
+	cmd = {
+		"dotnet",
+		omnisharp_bin,
+		"--languageserver",
+		"--hostPID",
+		tostring(vim.fn.getpid()),
+		-- If your project has multiple .sln or .csproj files in the root_dir
+		-- and you don't want the "Specify which project file" error,
+		-- you might need to *temporarily* add this back for testing:
+		-- "--solution", "skymania.sln",
+	},
+	-- This root_dir logic should be fine; it helps nvim-lspconfig find the project root.
+	root_dir = function(fname)
+		-- Prioritize finding a .sln file in the current directory or its parents
+		local root = require('lspconfig.util').root_pattern(".sln")(fname)
+		if root then
+			return root
+		end
+		-- If no .sln found, then look for .csproj, omnisharp.json, etc.
+		return require('lspconfig.util').root_pattern("*.csproj", "omnisharp.json", "function.json")(fname)
+			 or require('lspconfig.util').find_git_ancestor(fname)
+	end,
+	-- ALL OmniSharp and .NET-specific settings should go here,
+	-- NOT in the 'cmd' table.
+	settings = {
+		OmniSharp = {
+			EnableRoslynAnalyzers = true,
+			EnableImportCompletion = true,
+			OrganizeImportsOnFormat = true,
+			Use = "latest",
+			DisableMSBuildProjectLoad = false,
+			-- If 'dotnet' is not in your PATH, you *might* need to specify it here
+			-- DotNetPath = "C:\\Program Files\\dotnet\\dotnet.exe",
+		},
+		FormattingOptions = {
+			EnableEditorConfigSupport = true,
+		},
+		DotNet = {
+			enablePackageRestore = false,
+		},
+		Sdk = {
+			IncludePrereleases = true,
+		},
+	}
 }

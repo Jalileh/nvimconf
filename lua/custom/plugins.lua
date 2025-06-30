@@ -42,13 +42,24 @@ local plugins = {
 	},
 
 	{
-		"zbirenbaum/copilot-cmp",
-		dependencies = { "copilot.lua", "nvim-cmp" },
-		lazy = false,
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
 		config = function()
-			require("copilot_cmp").setup()
+			require("copilot").setup({
+				-- your copilot config
+			})
+
+			-- Keymap goes here
+			vim.keymap.set("i", "<C-m>", function()
+				local suggestion = require("copilot.suggestion")
+				if suggestion.is_visible() then
+					suggestion.accept()
+				end
+			end, { desc = "Accept Copilot suggestion" })
 		end,
 	},
+
 	{
 		"yetone/avante.nvim",
 		event = "VeryLazy",
