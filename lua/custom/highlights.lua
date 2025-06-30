@@ -6,14 +6,20 @@ local M = {}
 
 ---@type Base46HLGroupsList
 M.override = {
-  Comment = {
-    italic = true,
-  },
+	Comment = {
+		italic = true,
+	},
+	LspSignatureActiveParameter = {
+		fg = "#FFFFFF", -- This sets the foreground (text) color to pure white.
+		-- You can experiment with other light colors like "#FFFF00" (yellow),
+		-- or "#00FFFF" (cyan) if white doesn't provide enough contrast with your background.
+
+	},
 }
 
 ---@type HLTable
 M.add = {
-  NvimTreeOpenedFolderName = { fg = "green", bold = true },
+	NvimTreeOpenedFolderName = { fg = "green", bold = true },
 }
 
 return M

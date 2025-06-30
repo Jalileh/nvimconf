@@ -128,17 +128,6 @@ local plugins = {
 	},
 
 	{
-		"ray-x/lsp_signature.nvim",
-		"nvim-lua/plenary.nvim",
-		event = "VeryLazy",
-		opts = {},
-		config = function(_, opts)
-			require("lsp_signature").setup(opts)
-		end,
-	},
-
-
-	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			require "plugins.configs.lspconfig"
@@ -146,6 +135,29 @@ local plugins = {
 		end, -- Override to setup mason-lspconfig
 	},
 
+	{
+		"ray-x/lsp_signature.nvim",
+		"nvim-lua/plenary.nvim", -- Plenary is a dependency for lsp_signature.nvim
+		event = "VeryLazy",
+		opts = {},
+		config = function(_, opts)
+			require("lsp_signature").setup(opts)
+
+			-- Add your keymaps here
+			-- These keymaps will be global, not buffer-local,
+			-- but will only function when an LSP client provides signature help.
+
+			-- Toggle lsp_signature float window
+			vim.keymap.set({ 'n' }, '<Leader>lz', function()
+				require('lsp_signature').toggle_float_win()
+			end, { silent = true, noremap = false, desc = 'toggle signature' })
+
+			-- Manually trigger LSP signature help (this is a core LSP function)
+			vim.keymap.set({ 'n' }, '<Leader>k', function()
+				vim.lsp.buf.signature_help()
+			end, { silent = true, noremap = true, desc = 'show signature help' })
+		end,
+	},
 
 	{
 		"williamboman/mason.nvim",
