@@ -29,51 +29,106 @@ local plugins = {
 			g.ale_lint_on_save = 1
 		end,
 	},
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				suggestion = { enabled = false },
-				panel = { enabled = false },
-			})
-		end,
-	},
+
 
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
-		event = "InsertEnter",
+		event = "InsertEnter", -- Only load when entering insert mode, good for suggestions
 		config = function()
-			require("copilot").setup({
-				-- your copilot config
+			require('copilot').setup({
+				panel = {
+					enabled = true,
+					auto_refresh = false,
+					keymap = {
+						jump_prev = "[[",
+						jump_next = "]]",
+						accept = "<CR>",
+						refresh = "gr",
+						open = "<M-CR>"
+					},
+					layout = {
+						position = "bottom", -- | top | left | right | horizontal | vertical
+						ratio = 0.4
+					},
+				},
+				suggestion = {
+					enabled = true,
+					auto_trigger = false,
+					hide_during_completion = true,
+					debounce = 75,
+					trigger_on_accept = true,
+					keymap = {
+						accept = "<M-l>",
+						accept_word = false,
+						accept_line = true,
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+				filetypes = {
+					yaml = false,
+					markdown = false,
+					help = false,
+					gitcommit = false,
+					gitrebase = false,
+					hgcommit = false,
+					svn = false,
+					cvs = false,
+					["."] = false,
+				},
+				auth_provider_url = nil, -- URL to authentication provider, if not "https://github.com/"
+				logger = {
+					file = vim.fn.stdpath("log") .. "/copilot-lua.log",
+					file_log_level = vim.log.levels.OFF,
+					print_log_level = vim.log.levels.WARN,
+					trace_lsp = "off", -- "off" | "messages" | "verbose"
+					trace_lsp_progress = false,
+					log_lsp_messages = false,
+				},
+				copilot_node_command = 'node', -- Node.js version must be > 20
+				workspace_folders = {},
+				copilot_model = "",    -- Current LSP default is gpt-35-turbo, supports gpt-4o-copilot
+				root_dir = function()
+					return vim.fs.dirname(vim.fs.find(".git", { upward = true })[1])
+				end,
+				should_attach = function(_, _)
+					if not vim.bo.buflisted then
+						return false
+					end
+
+					if vim.bo.buftype ~= "" then
+						return false
+					end
+
+					return true
+				end,
+				server = {
+					type = "nodejs", -- "nodejs" | "binary"
+					custom_server_filepath = nil,
+				},
+				server_opts_overrides = {},
 			})
 
-			-- Keymap goes here
-			vim.keymap.set("i", "<C-m>", function()
-				local suggestion = require("copilot.suggestion")
-				if suggestion.is_visible() then
-					suggestion.accept()
-				end
-			end, { desc = "Accept Copilot suggestion" })
+
+
+			-- Keymap for Copilot's own suggestion (might be useful as a fallback or if Avante is off)
 		end,
 	},
 
 	{
 		"yetone/avante.nvim",
 		event = "VeryLazy",
-		version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+		version = false,
 		opts = {
-
 			ui = {
 				file_width = 30,
 				output = {
 					height = 15,
 					width = 80,
 				},
-				relative = "win",
-				"editor"
+				relative = "editor"
 			},
 			provider = "copilot",
 			auto_suggestions_provider = "copilot",
@@ -83,41 +138,29 @@ local plugins = {
 				enable_cursor_planning_mode = true
 			},
 		},
-
-
-		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 		build = "make",
-		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
 		dependencies = {
 			"stevearc/dressing.nvim",
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
-			--- The below dependencies are optional,
-			"hrsh7th/nvim-cmp",      -- autocompletion for avante commands and mentions
-			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-			"zbirenbaum/copilot.lua", -- for providers='copilot'
-
+			"hrsh7th/nvim-cmp",
+			"nvim-tree/nvim-web-devicons",
+			"zbirenbaum/copilot.lua", -- This dependency ensures Copilot is loaded for Avante
 			{
-				-- support for image pasting
 				"HakonHarnes/img-clip.nvim",
 				event = "VeryLazy",
 				opts = {
-					-- recommended settings
-
-
 					default = {
 						embed_image_as_base64 = true,
 						prompt_for_file_name = false,
 						drag_and_drop = {
 							insert_mode = true,
 						},
-						-- required for Windows users
 						use_absolute_path = true,
 					},
 				},
 			},
 			{
-				-- Make sure to set this up properly if you have lazy=true
 				'MeanderingProgrammer/render-markdown.nvim',
 				opts = {
 					file_types = { "markdown", "Avante" },
@@ -125,6 +168,27 @@ local plugins = {
 				ft = { "markdown", "Avante" },
 			},
 		},
+		-- Avante specific keymap for accepting suggestions from Copilot provider
+		-- This is where the real "genius" fix lies
+		config = function(_, opts)
+			require("avante").setup(opts)
+
+			-- Keymap for accepting Avante's auto-suggestions (from Copilot)
+			-- Avante typically uses <Tab> by default for accepting its auto-suggestions.
+			-- If you want to use <C-m>, you'd map it to Avante's accept function.
+			vim.keymap.set("i", "<C-m>", function()
+				if require("avante.ai.copilot.suggestions").is_visible() then
+					require("avante.ai.copilot.suggestions").accept()
+				end
+			end, { desc = "Accept Avante/Copilot suggestion" })
+
+			-- You can also try mapping to the general Avante accept function if you want it to work for any provider
+			-- vim.keymap.set("i", "<C-m>", function()
+			-- 	if require("avante.ui.suggestion_box").is_visible() then
+			-- 		require("avante.ui.suggestion_box").accept()
+			-- 	end
+			-- end, { desc = "Accept Avante suggestion (general)" })
+		end
 	},
 
 	{
