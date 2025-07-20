@@ -215,7 +215,7 @@ vim.keymap.set({ "n", "i" }, "<M-k>", function()
 	if not _G.copilot_suggestions_temporarily_disabled then
 		-- If suggestions are currently NOT temporarily disabled by our keymap
 		-- Toggle them OFF now using the command.
-		vim.cmd('Copilot toggle') -- Calls the :Copilot toggle command
+		vim.cmd('Copilot suggestion toggle_auto_trigger') -- Calls the :Copilot toggle command
 		_G.copilot_suggestions_temporarily_disabled = true
 		vim.notify("Copilot inline suggestions OFF for 5 minutes.", vim.log.levels.INFO)
 
@@ -223,14 +223,14 @@ vim.keymap.set({ "n", "i" }, "<M-k>", function()
 		vim.defer_fn(function()
 			-- Only re-enable if our flag indicates it was temporarily disabled by THIS keymap
 			if _G.copilot_suggestions_temporarily_disabled then
-				vim.cmd('Copilot toggle') -- Calls the :Copilot toggle command to turn them back ON
+				vim.cmd('Copilot suggestion toggle_auto_trigger') -- Calls the :Copilot toggle command to turn them back ON
 				_G.copilot_suggestions_temporarily_disabled = false
 				vim.notify("Copilot inline suggestions RE-ENABLED.", vim.log.levels.INFO)
 			end
 		end, 5 * 60 * 1000)
 	else
 		-- If suggestions ARE currently temporarily disabled by our keymap, toggle them ON immediately
-		vim.cmd('Copilot toggle') -- Calls the :Copilot toggle command to turn them ON
+		vim.cmd('Copilot suggestion toggle_auto_trigger') -- Calls the :Copilot toggle command to turn them ON
 		_G.copilot_suggestions_temporarily_disabled = false
 		vim.notify("Copilot inline suggestions RE-ENABLED.", vim.log.levels.INFO)
 	end

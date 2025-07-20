@@ -21,11 +21,13 @@ local plugins = {
 				sh = { "bashate", "cspell", "language_server", "shell", "shellcheck" },
 				bash = { "bashate", "cspell", "language_server", "shell", "shellcheck" },
 				cpp = { "clangtidy" },
+				lua = { "language_server" },
+				c_sharp = { "language_server" },
 			}
 
 			g.ale_lint_on_text_changed = "never"
 			g.ale_lint_on_insert_leave = 0
-			g.ale_lint_on_enter = 1
+			g.ale_lint_on_enter = 0
 			g.ale_lint_on_save = 1
 		end,
 	},
@@ -54,61 +56,19 @@ local plugins = {
 				},
 				suggestion = {
 					enabled = true,
-					auto_trigger = false,
+					auto_trigger = true,
 					hide_during_completion = true,
 					debounce = 75,
 					trigger_on_accept = true,
 					keymap = {
 						accept = "<M-l>",
-						accept_word = false,
-						accept_line = true,
+						accept_word = "<M-o>",
+						accept_line = "<M-u>",
 						next = "<M-]>",
 						prev = "<M-[>",
 						dismiss = "<C-]>",
 					},
 				},
-				filetypes = {
-					yaml = false,
-					markdown = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
-				},
-				auth_provider_url = nil, -- URL to authentication provider, if not "https://github.com/"
-				logger = {
-					file = vim.fn.stdpath("log") .. "/copilot-lua.log",
-					file_log_level = vim.log.levels.OFF,
-					print_log_level = vim.log.levels.WARN,
-					trace_lsp = "off", -- "off" | "messages" | "verbose"
-					trace_lsp_progress = false,
-					log_lsp_messages = false,
-				},
-				copilot_node_command = 'node', -- Node.js version must be > 20
-				workspace_folders = {},
-				copilot_model = "",    -- Current LSP default is gpt-35-turbo, supports gpt-4o-copilot
-				root_dir = function()
-					return vim.fs.dirname(vim.fs.find(".git", { upward = true })[1])
-				end,
-				should_attach = function(_, _)
-					if not vim.bo.buflisted then
-						return false
-					end
-
-					if vim.bo.buftype ~= "" then
-						return false
-					end
-
-					return true
-				end,
-				server = {
-					type = "nodejs", -- "nodejs" | "binary"
-					custom_server_filepath = nil,
-				},
-				server_opts_overrides = {},
 			})
 
 
@@ -202,7 +162,7 @@ local plugins = {
 	{
 		"ray-x/lsp_signature.nvim",
 		"nvim-lua/plenary.nvim", -- Plenary is a dependency for lsp_signature.nvim
-		event = "VeryLazy",
+		lazy = false,
 		opts = {},
 		config = function(_, opts)
 			require("lsp_signature").setup(opts)
@@ -322,6 +282,15 @@ local plugins = {
 		end,
 	},
 
+	{
+		"saifulapm/commasemi.nvim",
+		event = "VeryLazy",
+		opts = {
+			leader = "<leader>",
+			keymaps = true,
+			commands = true
+		}
+	},
 	{
 		"folke/trouble.nvim",
 		opts = {}, -- for default options, refer to the configuration section for custom setup.

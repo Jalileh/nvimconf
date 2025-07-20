@@ -39,7 +39,7 @@ conform.formatters.prettier = {
 
 conform.formatters.astyle = {
 	command = "astyle",
-	args = { "--style=java", "--indent=spaces=3", "--squeeze-lines=1", "--squeeze-ws" },
+	args = { "--style=java", "--indent=spaces=3", "--squeeze-lines=1", "--squeeze-ws", "--indent-namespaces" },
 }
 
 conform.formatters.stylua = {}
