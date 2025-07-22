@@ -7,7 +7,7 @@ local lspconfig = require "lspconfig"
 
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 -- if you just want default config for the servers then put them in a table
-local servers = { "markdown_oxide", "html", "csharp_ls", "cssls", "ts_ls", "gopls", "dockerls" }
+local servers = { "markdown_oxide", "html", "cssls", "ts_ls", "gopls", "dockerls" }
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
@@ -16,6 +16,10 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
+lspconfig.csharp_ls.setup {
+	capabilities = capabilities,
+	on_attach = on_attach,
+}
 lspconfig.sqlls.setup {
 	capabilities = capabilities,
 	filetypes = { 'sql' },

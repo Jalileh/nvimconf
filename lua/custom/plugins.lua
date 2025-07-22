@@ -205,29 +205,38 @@ local plugins = {
 
 
 	{
-		"folke/persistence.nvim",
-		event = "BufReadPre", -- This is a good event for persistence to ensure it loads before you start editing
-		config = function()
-			require("persistence").setup({
-				-- Your configuration options here
-				dir = vim.fn.expand(vim.fn.stdpath("data") .. "/persistence/"), -- Absolute path to store sessions
-				options = {
-					"buffers",                                           -- save buffers
-					"curdir",                                            -- save current directory
-					"tabpages",                                          -- save tabpages
-					"winsize",                                           -- save windows size
-					"winpos",                                            -- save windows position
-					"help",                                              -- save help windows
-					"globals",                                           -- save global variables
-					"folds"
-				},
-				pre_load = function()
-					-- Optional: you can run commands before loading the session
-				end,
-				post_load = function()
-				end,
-			})
+		'rmagatti/auto-session',
+		lazy = false,
+		keys = {
+			{ '<leader>wr', '<cmd>SessionSearch<CR>',         desc = 'Session search' },
+			{ '<leader>ws', '<cmd>SessionSave<CR>',           desc = 'Save session' },
+			{ '<leader>wa', '<cmd>SessionToggleAutoSave<CR>', desc = 'Toggle autosave' },
+		},
+
+		init = function()
+			-- 🛠️ This ensures folds and other settings are saved
+			vim.o.sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal,localoptions"
 		end,
+
+		---@type AutoSession.Config
+		opts = {
+			suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+			session_lens = {
+				load_on_setup = true, -- Initialize on startup (requires Telescope)
+				picker_opts = nil, -- Table passed to Telescope / Snacks to configure the picker. See below for more information
+				mappings = {
+					-- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
+					delete_session = { "i", "<C-D>" },
+					alternate_session = { "i", "<C-S>" },
+					copy_session = { "i", "<C-Y>" },
+				},
+
+				session_control = {
+					control_dir = vim.fn.stdpath "data" .. "/auto_session/", -- Auto session control dir, for control files, like alternating between two sessions with session-lens
+					control_filename = "session_control.json",     -- File name of the session control file
+				},
+			},
+		}
 	},
 
 	{
@@ -253,6 +262,50 @@ local plugins = {
 		end,
 	},
 
+	{
+		"nvimdev/lspsaga.nvim",
+		event = "LspAttach",
+		config = function()
+			require("lspsaga").setup({
+				ui = {
+					border = "rounded",
+					title = true,
+					winblend = 10,
+				},
+				hover = {
+					max_width = 0.6,
+					max_height = 0.6,
+				},
+			})
+		end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons", -- optional icons
+		},
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					hover = {
+						enabled = true,
+						border = {
+							style = "rounded",
+						},
+					},
+					signature = {
+						enabled = true,
+					},
+				},
+			})
+		end
+	},
 
 	{
 		"mbbill/undotree",

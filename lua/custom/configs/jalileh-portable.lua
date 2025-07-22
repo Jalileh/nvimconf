@@ -69,7 +69,7 @@ function SetBackPreviousCD()
 	else
 		vim.cmd("silent! cd " .. Cwdhandler.PreviousCWDs[tostring(index)])
 		print("Switched to: " .. Cwdhandler.PreviousCWDs[tostring(index)])
-		require('persistence').load()
+		-- require('persistence').load()
 	end
 	Cwdhandler:SaveCache()
 end
@@ -209,16 +209,16 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, desc = 'Telescope->Workspace Symbols' }
 )
 
--- Set keymaps for manual interaction (optional, but good to have)
-vim.api.nvim_set_keymap("n", "<leader>qs", "<cmd>lua require('persistence').load()<cr>",
-	{ noremap = true, silent = true, desc = "Restore last session for current dir" })
-vim.api.nvim_set_keymap("n", "<leader>ql", "<cmd>lua require('persistence').load()<cr>",
-	{ noremap = true, silent = true, desc = "Restore last session for current dir" })
-vim.api.nvim_set_keymap("n", "<leader>qd", "<cmd>lua require('persistence').delete()<cr>",
-	{ noremap = true, silent = true, desc = "Delete current session" })
-vim.api.nvim_set_keymap("n", "<leader>qa", "<cmd>lua require('persistence').stop()<cr>",
-	{ noremap = true, silent = true, desc = "Stop autosaving session for current dir" })
-
+vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+	pattern = { "*.*" },
+	desc = "save view (folds), when closing file",
+	command = "mkview",
+})
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	pattern = { "*.*" },
+	desc = "load view (folds), when opening file",
+	command = "silent! loadview"
+})
 
 
 
