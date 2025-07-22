@@ -205,12 +205,29 @@ local plugins = {
 
 
 	{
-
-		"Shatur/neovim-session-manager",
-		event = "VimEnter",   -- Load on Vim startup
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- A common dependency for many Lua plugins
-		},
+		"folke/persistence.nvim",
+		event = "BufReadPre", -- This is a good event for persistence to ensure it loads before you start editing
+		config = function()
+			require("persistence").setup({
+				-- Your configuration options here
+				dir = vim.fn.expand(vim.fn.stdpath("data") .. "/persistence/"), -- Absolute path to store sessions
+				options = {
+					"buffers",                                           -- save buffers
+					"curdir",                                            -- save current directory
+					"tabpages",                                          -- save tabpages
+					"winsize",                                           -- save windows size
+					"winpos",                                            -- save windows position
+					"help",                                              -- save help windows
+					"globals",                                           -- save global variables
+					"folds"
+				},
+				pre_load = function()
+					-- Optional: you can run commands before loading the session
+				end,
+				post_load = function()
+				end,
+			})
+		end,
 	},
 
 	{
@@ -219,7 +236,7 @@ local plugins = {
 			"kevinhwang91/promise-async",
 		},
 		config = function()
-			require "plugins.configs.nvim-ufo"
+			require "custom.configs.nvim-ufo"
 		end,
 	},
 

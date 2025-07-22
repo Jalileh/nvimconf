@@ -69,6 +69,7 @@ function SetBackPreviousCD()
 	else
 		vim.cmd("silent! cd " .. Cwdhandler.PreviousCWDs[tostring(index)])
 		print("Switched to: " .. Cwdhandler.PreviousCWDs[tostring(index)])
+		require('persistence').load()
 	end
 	Cwdhandler:SaveCache()
 end
@@ -207,9 +208,24 @@ vim.api.nvim_set_keymap(
 	"<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>",
 	{ noremap = true, silent = true, desc = 'Telescope->Workspace Symbols' }
 )
+
+-- Set keymaps for manual interaction (optional, but good to have)
+vim.api.nvim_set_keymap("n", "<leader>qs", "<cmd>lua require('persistence').load()<cr>",
+	{ noremap = true, silent = true, desc = "Restore last session for current dir" })
+vim.api.nvim_set_keymap("n", "<leader>ql", "<cmd>lua require('persistence').load()<cr>",
+	{ noremap = true, silent = true, desc = "Restore last session for current dir" })
+vim.api.nvim_set_keymap("n", "<leader>qd", "<cmd>lua require('persistence').delete()<cr>",
+	{ noremap = true, silent = true, desc = "Delete current session" })
+vim.api.nvim_set_keymap("n", "<leader>qa", "<cmd>lua require('persistence').stop()<cr>",
+	{ noremap = true, silent = true, desc = "Stop autosaving session for current dir" })
+
+
+
+
 -- Define a global variable to track the state of our temporary disable
 -- You can place this at the top of your config file, outside any function.
 _G.copilot_suggestions_temporarily_disabled = false
+
 
 vim.keymap.set({ "n", "i" }, "<M-k>", function()
 	if not _G.copilot_suggestions_temporarily_disabled then
