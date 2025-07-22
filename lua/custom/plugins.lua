@@ -204,6 +204,26 @@ local plugins = {
 	-- Install a plugin
 
 
+	{
+
+		"Shatur/neovim-session-manager",
+		event = "VimEnter",   -- Load on Vim startup
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- A common dependency for many Lua plugins
+		},
+	},
+
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = {
+			"kevinhwang91/promise-async",
+		},
+		config = function()
+			require "plugins.configs.nvim-ufo"
+		end,
+	},
+
+
 
 	{
 
