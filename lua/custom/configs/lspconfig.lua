@@ -16,11 +16,42 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
+-- --- Re-add the proper CSHARP_LS CONFIGURATION ---
+
+local utils = require "core.utils"
 lspconfig.csharp_ls.setup {
+	on_attach = function(client, bufnr)
+		utils.load_mappings("lspconfig", { buffer = bufnr })
+		client.config.init_options = {
+			AutomaticWorkspaceInit = true,
+			-- You might want to explicitly set positionEncoding, e.g., if you see warnings
+			-- This could also help with the 'position_encoding_param' warning
+			-- positionEncoding = "utf-16", -- or "utf-8" depending on server/client compatibility
+		}
+
+		client.config.cmd = { "dotnet", "csharp-ls", "--host-editor-mode", "neovim" }
+		client.config.root_dir = lspconfig.util.root_pattern(".sln", ".csproj", ".git")
+
+		require("lsp_signature").setup({
+			bind = true,
+			handler_opts = {
+				border = "rounded",
+			},
+			hint_enable = false, -- disable inline virtual text
+			floating_window = true,
+			wrap = true,
+			floating_window_above_cur_line = true,
+			fix_pos = true,
+			hi_parameter = "IncSearch", -- Use 'IncSearch' highlight group for current parameter
+		})
+		require("nvchad.signature").setup(client)
+	end,
+
 	capabilities = capabilities,
-	on_attach = on_attach,
 }
+
 lspconfig.sqlls.setup {
+
 	capabilities = capabilities,
 	filetypes = { 'sql' },
 	root_dir = function(_)

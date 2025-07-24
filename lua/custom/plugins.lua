@@ -161,26 +161,8 @@ local plugins = {
 
 	{
 		"ray-x/lsp_signature.nvim",
-		"nvim-lua/plenary.nvim", -- Plenary is a dependency for lsp_signature.nvim
+		"nvim-lua/plenary.nvim",
 		lazy = false,
-		opts = {},
-		config = function(_, opts)
-			require("lsp_signature").setup(opts)
-
-			-- Add your keymaps here
-			-- These keymaps will be global, not buffer-local,
-			-- but will only function when an LSP client provides signature help.
-
-			-- Toggle lsp_signature float window
-			vim.keymap.set({ 'n' }, '<Leader>lz', function()
-				require('lsp_signature').toggle_float_win()
-			end, { silent = true, noremap = false, desc = 'toggle signature' })
-
-			-- Manually trigger LSP signature help (this is a core LSP function)
-			vim.keymap.set({ 'n' }, '<Leader>k', function()
-				vim.lsp.buf.signature_help()
-			end, { silent = true, noremap = true, desc = 'show signature help' })
-		end,
 	},
 
 	{
@@ -220,10 +202,12 @@ local plugins = {
 
 		---@type AutoSession.Config
 		opts = {
-			suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+			suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/Desktop' },
+			enabled = true,             -- Enables/disables auto creating, saving and restoring
+			auto_restore_last_session = true, -- On startup, loads the last saved session if session for cwd does not exist
 			session_lens = {
-				load_on_setup = true, -- Initialize on startup (requires Telescope)
-				picker_opts = nil, -- Table passed to Telescope / Snacks to configure the picker. See below for more information
+				load_on_setup = true,    -- Initialize on startup (requires Telescope)
+				picker_opts = nil,       -- Table passed to Telescope / Snacks to configure the picker. See below for more information
 				mappings = {
 					-- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
 					delete_session = { "i", "<C-D>" },
@@ -237,6 +221,12 @@ local plugins = {
 				},
 			},
 		}
+	},
+	{
+		"Decodetalkers/csharpls-extended-lsp.nvim",
+		-- Make sure this loads after lspconfig, and only when csharp_ls is active
+		dependencies = { "neovim/nvim-lspconfig" },
+		event = "VeryLazy", -- Or "LspAttach" if you want it loaded specifically with LSP
 	},
 
 	{
@@ -262,27 +252,7 @@ local plugins = {
 		end,
 	},
 
-	{
-		"nvimdev/lspsaga.nvim",
-		event = "LspAttach",
-		config = function()
-			require("lspsaga").setup({
-				ui = {
-					border = "rounded",
-					title = true,
-					winblend = 10,
-				},
-				hover = {
-					max_width = 0.6,
-					max_height = 0.6,
-				},
-			})
-		end,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons", -- optional icons
-		},
-	},
+
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -292,20 +262,25 @@ local plugins = {
 		},
 		config = function()
 			require("noice").setup({
+				-- you can enable a preset for easier configuration
 				lsp = {
-					hover = {
-						enabled = true,
-						border = {
-							style = "rounded",
-						},
-					},
 					signature = {
-						enabled = true,
-					},
+						enabled = false,
+					}
+				},
+				enabled = true,
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+
 				},
 			})
 		end
 	},
+
 
 	{
 		"mbbill/undotree",
