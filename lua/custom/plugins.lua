@@ -208,7 +208,7 @@ local plugins = {
 
 		---@type AutoSession.Config
 		opts = {
-			suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/Desktop' },
+			suppressed_dirs = { '~/', '~/projects', '~/downloads', '/desktop' },
 			enabled = true,              -- Enables/disables auto creating, saving and restoring
 			auto_restore_last_session = false, -- On startup, loads the last saved session if session for cwd does not exist
 			session_lens = {

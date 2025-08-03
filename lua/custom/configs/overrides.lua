@@ -61,6 +61,10 @@ M.nvimtree = {
 			},
 		},
 	},
+	filters = {
+		dotfiles = false,
+		custom = { ".meta" },
+	},
 }
 
 -- Disable indent-blankline

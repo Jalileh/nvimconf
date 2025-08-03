@@ -220,21 +220,42 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	command = "silent! loadview"
 })
 
--- This is a more advanced example. It might not be perfect for every use case.
-function Find_noice_hover_window()
-	for _, winid in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-		if vim.api.nvim_win_get_config(winid).relative ~= "" then
-			local bufnr = vim.api.nvim_win_get_buf(winid)
-			local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-			if filetype == "markdown" and vim.api.nvim_buf_get_name(bufnr) == "" then
-				-- This is a heuristic to find the hover window.
-				-- Noice hovers are often markdown and don't have a file name.
-				return winid
-			end
+-- This function deletes all buffers except the current one.
+-- It's a common and useful function for keeping your buffer list clean.
+
+function DeleteOtherBuffers()
+	-- Get the number of the current active buffer.
+	local current_buf = vim.api.nvim_get_current_buf()
+
+	-- Create a list of buffers to be deleted.
+	local buffers_to_delete = {}
+	for _, buf_id in ipairs(vim.api.nvim_list_bufs()) do
+		-- Check if the buffer is valid, loaded, and not the current buffer.
+		if vim.api.nvim_buf_is_valid(buf_id) and vim.api.nvim_buf_is_loaded(buf_id) and buf_id ~= current_buf then
+			table.insert(buffers_to_delete, buf_id)
 		end
 	end
-	return nil
+
+	-- If there are buffers to delete, execute the command.
+	if #buffers_to_delete > 0 then
+		-- Use vim.schedule to run the command after the current event loop,
+		-- which can prevent some race conditions with buffer updates.
+		vim.schedule(function()
+			-- The `bdelete!` command is used to force the deletion,
+			-- even if there are unsaved changes.
+			-- The `table.concat` function joins the buffer IDs into a single string.
+			local cmd = "silent! bdelete! " .. table.concat(buffers_to_delete, " ")
+			vim.cmd(cmd)
+		end)
+	end
 end
+
+-- Define the keymap.
+-- The `<leader>` key is typically set to `<space>`.
+-- The `X` key is a good choice for this command as it's a common
+-- mnemonic for "kill" or "close".
+-- The `desc` provides a description for the command in tools like `which-key`.
+vim.keymap.set("n", "<leader>X", DeleteOtherBuffers, { desc = "Delete all other buffers" })
 
 -- Define a global variable to track the state of our temporary disable
 -- You can place this at the top of your config file, outside any function.
