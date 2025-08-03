@@ -37,14 +37,13 @@ lspconfig.csharp_ls.setup {
 			handler_opts = {
 				border = "rounded",
 			},
-			hint_enable = false, -- disable inline virtual text
-			floating_window = true,
+			hint_enable = true, -- disable inline virtual text
+			floating_window = false,
 			wrap = true,
-			floating_window_above_cur_line = true,
+			floating_window_above_cur_line = false,
 			fix_pos = true,
 			hi_parameter = "IncSearch", -- Use 'IncSearch' highlight group for current parameter
 		})
-		require("nvchad.signature").setup(client)
 	end,
 
 	capabilities = capabilities,

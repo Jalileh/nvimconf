@@ -12,7 +12,13 @@ M.override = {
 	-- LspSignatureActiveParameter = {
 	-- 	fg = "#FFFFFF", -- This sets the foreground (text) color to pure white.
 	-- },
-
+	LspSignatureActiveParameter = {
+		link = "Normal",
+		-- You can also set a specific color if you want, for example:
+		-- fg = "#FFFFFF",
+		-- bold = false,
+		-- italic = false,
+	},
 }
 
 ---@type HLTable

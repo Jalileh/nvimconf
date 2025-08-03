@@ -220,7 +220,21 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	command = "silent! loadview"
 })
 
-
+-- This is a more advanced example. It might not be perfect for every use case.
+function Find_noice_hover_window()
+	for _, winid in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if vim.api.nvim_win_get_config(winid).relative ~= "" then
+			local bufnr = vim.api.nvim_win_get_buf(winid)
+			local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+			if filetype == "markdown" and vim.api.nvim_buf_get_name(bufnr) == "" then
+				-- This is a heuristic to find the hover window.
+				-- Noice hovers are often markdown and don't have a file name.
+				return winid
+			end
+		end
+	end
+	return nil
+end
 
 -- Define a global variable to track the state of our temporary disable
 -- You can place this at the top of your config file, outside any function.

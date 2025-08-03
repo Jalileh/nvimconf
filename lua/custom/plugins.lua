@@ -32,70 +32,76 @@ local plugins = {
 		end,
 	},
 
-
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter", -- Only load when entering insert mode, good for suggestions
-		config = function()
-			require('copilot').setup({
-				panel = {
-					enabled = true,
-					auto_refresh = false,
-					keymap = {
-						jump_prev = "[[",
-						jump_next = "]]",
-						accept = "<CR>",
-						refresh = "gr",
-						open = "<M-CR>"
-					},
-					layout = {
-						position = "bottom", -- | top | left | right | horizontal | vertical
-						ratio = 0.4
-					},
-				},
-				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					hide_during_completion = true,
-					debounce = 75,
-					trigger_on_accept = true,
-					keymap = {
-						accept = "<M-l>",
-						accept_word = "<M-o>",
-						accept_line = "<M-u>",
-						next = "<M-]>",
-						prev = "<M-[>",
-						dismiss = "<C-]>",
-					},
-				},
-			})
-
-
-
-			-- Keymap for Copilot's own suggestion (might be useful as a fallback or if Avante is off)
-		end,
-	},
+	--
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	cmd = "Copilot",
+	-- 	event = "InsertEnter", -- Only load when entering insert mode, good for suggestions
+	-- 	config = function()
+	-- 		require('copilot').setup({
+	-- 			panel = {
+	-- 				enabled = true,
+	-- 				auto_refresh = false,
+	-- 				keymap = {
+	-- 					jump_prev = "[[",
+	-- 					jump_next = "]]",
+	-- 					accept = "<CR>",
+	-- 					refresh = "gr",
+	-- 					open = "<M-CR>"
+	-- 				},
+	-- 				layout = {
+	-- 					position = "bottom", -- | top | left | right | horizontal | vertical
+	-- 					ratio = 0.4
+	-- 				},
+	-- 			},
+	-- 			suggestion = {
+	-- 				enabled = true,
+	-- 				auto_trigger = true,
+	-- 				hide_during_completion = true,
+	-- 				debounce = 75,
+	-- 				trigger_on_accept = true,
+	-- 				keymap = {
+	-- 					accept = "<M-l>",
+	-- 					accept_word = "<M-o>",
+	-- 					accept_line = "<M-u>",
+	-- 					next = "<M-]>",
+	-- 					prev = "<M-[>",
+	-- 					dismiss = "<C-]>",
+	-- 				},
+	-- 			},
+	-- 		})
+	--
+	--
+	--
+	-- 		-- Keymap for Copilot's own suggestion (might be useful as a fallback or if Avante is off)
+	-- 	end,
+	-- },
+	--
 
 	{
 		"yetone/avante.nvim",
 		event = "VeryLazy",
 		version = false,
 		opts = {
-			ui = {
-				file_width = 30,
-				output = {
-					height = 15,
-					width = 80,
-				},
-				relative = "editor"
-			},
-			provider = "copilot",
-			auto_suggestions_provider = "copilot",
+			provider = "mistral",
 			behaviour = {
-				modifiable = true,
-				auto_suggestions = false,
-				enable_cursor_planning_mode = true
+				enable_cursor_planning_mode = true,
+			},
+			cursor_applying_provider = "mistral",
+			providers = {
+				ollama = {
+					endpoint = "http://127.0.0.1:11434",
+					model = "llama3:latest",
+				},
+				mistral = {
+					__inherited_from = "openai",
+					api_key_name = "MISTRAL_API_KEY",
+					endpoint = "https://api.mistral.ai/v1/",
+					model = "codestral-latest",
+					extra_request_body = {
+						max_tokens = 4096,
+					},
+				},
 			},
 		},
 		build = "make",
@@ -203,11 +209,11 @@ local plugins = {
 		---@type AutoSession.Config
 		opts = {
 			suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/Desktop' },
-			enabled = true,             -- Enables/disables auto creating, saving and restoring
-			auto_restore_last_session = true, -- On startup, loads the last saved session if session for cwd does not exist
+			enabled = true,              -- Enables/disables auto creating, saving and restoring
+			auto_restore_last_session = false, -- On startup, loads the last saved session if session for cwd does not exist
 			session_lens = {
-				load_on_setup = true,    -- Initialize on startup (requires Telescope)
-				picker_opts = nil,       -- Table passed to Telescope / Snacks to configure the picker. See below for more information
+				load_on_setup = true,     -- Initialize on startup (requires Telescope)
+				picker_opts = nil,        -- Table passed to Telescope / Snacks to configure the picker. See below for more information
 				mappings = {
 					-- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
 					delete_session = { "i", "<C-D>" },
@@ -262,20 +268,42 @@ local plugins = {
 		},
 		config = function()
 			require("noice").setup({
-				-- you can enable a preset for easier configuration
 				lsp = {
 					signature = {
-						enabled = false,
+						enabled = true,
 					}
 				},
 				enabled = true,
 				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
-					command_palette = true, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = false, -- add a border to hover docs and signature help
+					bottom_search = true,
+					command_palette = true,
+					long_message_to_split = true,
+					inc_rename = false,
+					lsp_doc_border = false,
+				},
 
+				views = {
+					hover = {
+						relative = "editor",
+
+						position = {
+							row = "50%",
+							col = "100%",
+						},
+						border = {
+							style = "none",
+						},
+
+
+						-- win_options = {
+						-- 	wrap = true,
+						-- 	linebreak = true,
+						-- 	winhighlight = {
+						-- 		Normal = "NormalFloat",
+						-- 		FloatBorder = "NormalFloat",
+						-- 	}
+						-- },
+					},
 				},
 			})
 		end
