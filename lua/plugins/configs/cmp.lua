@@ -20,7 +20,7 @@ local formatting_style = {
 
 		if cmp_style == "atom" or cmp_style == "atom_colored" then
 			icon = " " .. icon .. " "
-			item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
+			item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
 			item.kind = icon
 		else
 			icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
@@ -68,6 +68,19 @@ local options = {
 
 	formatting = formatting_style,
 
+	sorting = {
+		comparators = {
+			cmp.config.compare.offset,
+			cmp.config.compare.exact,
+			cmp.config.compare.score,
+			require("plugins.configs.cmp_csharp").sort_csharp, -- This line will now work
+			cmp.config.compare.kind,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
+	},
+
 	mapping = {
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
@@ -105,14 +118,12 @@ local options = {
 		}),
 	},
 	sources = {
+		{ name = "buffer",   group_index = 2 },
 		{ name = "nvim_lsp", group_index = 1 },
-		{ name = "buffer",   group_index = 5 },
-		{ name = "luasnip",  group_index = 2 },
-		{ name = "nvim_lua", group_index = 3 },
-		{ name = "path",     group_index = 6 },
+		{ name = "luasnip",  group_index = 3 },
+		{ name = "nvim_lua", group_index = 4 },
+		{ name = "path",     group_index = 5 },
 	},
-
-
 }
 
 

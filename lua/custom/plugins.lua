@@ -209,11 +209,11 @@ local plugins = {
 		---@type AutoSession.Config
 		opts = {
 			suppressed_dirs = { '~/', '~/projects', '~/downloads', '/desktop' },
-			enabled = true,              -- Enables/disables auto creating, saving and restoring
-			auto_restore_last_session = false, -- On startup, loads the last saved session if session for cwd does not exist
+			enabled = true,             -- Enables/disables auto creating, saving and restoring
+			auto_restore_last_session = true, -- On startup, loads the last saved session if session for cwd does not exist
 			session_lens = {
-				load_on_setup = true,     -- Initialize on startup (requires Telescope)
-				picker_opts = nil,        -- Table passed to Telescope / Snacks to configure the picker. See below for more information
+				load_on_setup = true,    -- Initialize on startup (requires Telescope)
+				picker_opts = nil,       -- Table passed to Telescope / Snacks to configure the picker. See below for more information
 				mappings = {
 					-- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
 					delete_session = { "i", "<C-D>" },
@@ -287,8 +287,8 @@ local plugins = {
 						relative = "editor",
 
 						position = {
-							row = "50%",
-							col = "100%",
+							row = -50,
+							col = 100,
 						},
 						border = {
 							style = "none",
